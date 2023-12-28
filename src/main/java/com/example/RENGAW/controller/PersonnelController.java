@@ -9,27 +9,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/rengaw")
 public class PersonnelController {
 
     @Autowired
     private PersonnelService personnelService;
 
-    @PostMapping("/rengaw/savePersonnel")
+    @PostMapping("/savePersonnel")
     public Personnel savePersonnel(@Valid @RequestBody Personnel personnel){
         return personnelService.savePersonnel(personnel);
     }
 
-    @GetMapping("/rengaw/findPersonnel/firstName/{firstName}")
+    @GetMapping("/findPersonnel/firstName/{firstName}")
     public List<Personnel> findPersonnelByFirstName(@PathVariable("firstName") String firstName){
         return personnelService.findPersonnelByFirstName(firstName);
     }
 
-    @GetMapping("/rengaw/findPersonnel/lastName/{lastName}")
+    @GetMapping("/findPersonnel/lastName/{lastName}")
     public List<Personnel> findPersonnelByLastName(@PathVariable("lastName") String lastName){
         return personnelService.findPersonnelByLastName(lastName);
     }
 
-    @GetMapping("rengaw/findPersonnel/name")
+    @GetMapping("/findPersonnel/name")
     public List<Personnel> findPersonnelByFirstNameAndLastName(
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName
@@ -37,8 +38,13 @@ public class PersonnelController {
         return personnelService.findPersonnelByFirstNameAndLastName(firstName, lastName);
     }
 
-    @GetMapping("/rengaw/findStatus")
+    @GetMapping("/findStatus")
     public String findPersonnelStatusByEmailId(@RequestParam("mail") String emailId){
         return personnelService.findPersonnelStatusByEmailId(emailId);
+    }
+
+    @PutMapping("/changeStatusIfDepressed")
+    public void updatePersonnelStatusIfDepressed(){
+        personnelService.updatePersonnelStatusIfDepressed();
     }
 }

@@ -14,4 +14,6 @@ public interface PersonnelService {
     public List<Personnel> findPersonnelByFirstNameAndLastName(String firstName, String lastName);
 
     public String findPersonnelStatusByEmailId(String emailId);
+
+    public void updatePersonnelStatusIfDepressed();
 }

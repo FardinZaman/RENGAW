@@ -8,22 +8,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("/rengaw")
 @Slf4j
 public class PersonnelMedicalHistoryController {
 
     @Autowired
     private PersonnelMedicalHistoryService personnelMedicalHistoryService;
 
-    @PostMapping("/rengaw/savePersonnelMH")
+    @PostMapping("/savePersonnelMH")
     public PersonnelMedicalHistory savePersonnelMedicalHistory(@RequestParam("pid") String personnelId,
                                                                @Valid @RequestBody PersonnelMedicalHistory personnelMedicalHistory){
         return personnelMedicalHistoryService.savePersonnelMedicalHistory(personnelMedicalHistory, Long.valueOf(personnelId));
     }
 
-    @PutMapping("/rengaw/updatePersonnelMH/{pid}")
+    @PutMapping("/updatePersonnelMH/{pid}")
     public PersonnelMedicalHistory updatePersonnelMedicalHistoryByPersonnelId(@PathVariable("pid") Long personnelId,
                                                                               @RequestBody PersonnelMedicalHistory personnelMedicalHistory){
         return personnelMedicalHistoryService.updatePersonnelMedicalHistoryByPersonnelId(personnelMedicalHistory, personnelId);
+    }
+
+    @GetMapping("/findPersonnelMH/name/{name}")
+    public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByName(@PathVariable("name") String personnelName){
+        return personnelMedicalHistoryService.findPersonnelMedicalHistoryByName(personnelName);
+    }
+
+
+    @PutMapping("/updatePersonnelMH/mail")
+    public PersonnelMedicalHistory updatePersonnelMedicalHistoryByEmailId(@RequestParam("mail") String emailId,
+                                                                          @Valid @RequestBody PersonnelMedicalHistory personnelMedicalHistory){
+        return personnelMedicalHistoryService.updatePersonnelMedicalHistoryByEmailId(personnelMedicalHistory, emailId);
     }
 }

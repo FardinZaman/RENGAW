@@ -1,5 +1,6 @@
 package com.example.RENGAW.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import java.io.Serializable;
                 columnNames = "email_address"
         )
 )
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Personnel {
 
     @Id

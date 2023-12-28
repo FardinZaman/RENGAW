@@ -22,40 +22,45 @@ public class PersonnelServiceImpl implements PersonnelService{
 
     @Override
     public List<Personnel> findPersonnelByFirstName(String firstName) {
-        Optional<List<Personnel>> personnelList = personnelRepository.findByFirstNameIgnoreCase(firstName);
+        List<Personnel> personnelList = personnelRepository.findByFirstNameIgnoreCase(firstName);
 
         if (personnelList.isEmpty()){
             throw new EntityNotFoundException("No personnel with first name " + firstName);
         }
 
-        return personnelList.get();
+        return personnelList;
     }
 
     @Override
     public List<Personnel> findPersonnelByLastName(String lastName) {
-        Optional<List<Personnel>> personnelList = personnelRepository.findByLastNameIgnoreCase(lastName);
+        List<Personnel> personnelList = personnelRepository.findByLastNameIgnoreCase(lastName);
 
         if (personnelList.isEmpty()){
             throw new EntityNotFoundException("No personnel with first name " + lastName);
         }
 
-        return personnelList.get();
+        return personnelList;
     }
 
     @Override
     public List<Personnel> findPersonnelByFirstNameAndLastName(String firstName, String lastName) {
-        Optional<List<Personnel>> personnelList = personnelRepository.findByFirstNameAndLastNameIgnoreCase(firstName, lastName);
+        List<Personnel> personnelList = personnelRepository.findByFirstNameAndLastNameIgnoreCase(firstName, lastName);
 
         if (personnelList.isEmpty()){
             throw new EntityNotFoundException("No personnel with name " + firstName + lastName);
         }
 
-        return personnelList.get();
+        return personnelList;
     }
 
     @Override
     public String findPersonnelStatusByEmailId(String emailId) {
         String personnelStatus = personnelRepository.findStatusByEmailId(emailId).orElseThrow(EntityNotFoundException::new);
         return "Status : " + personnelStatus;
+    }
+
+    @Override
+    public void updatePersonnelStatusIfDepressed() {
+        personnelRepository.updatePersonnelStatusIfDepressed();
     }
 }
