@@ -1,6 +1,7 @@
 package com.example.RENGAW.service;
 
 import com.example.RENGAW.entity.Personnel;
+import com.example.RENGAW.entity.PersonnelMedicalHistory;
 import com.example.RENGAW.entity.Weapon;
 import com.example.RENGAW.repository.PersonnelRepository;
 import com.example.RENGAW.repository.WeaponRepository;
@@ -56,5 +57,20 @@ public class WeaponServiceImpl implements WeaponService{
     @Override
     public List<Weapon> findWeaponUsedByPersonnelByPersonnelId(Long personnelId) {
         return weaponRepository.findByPersonnelPersonnelId(personnelId);
+    }
+
+    @Override
+    public List<Personnel> findWeaponUserByWeaponProductionCompany(String productionCompany) {
+        return weaponRepository.findWeaponUserByWeaponProductionCompany(productionCompany);
+    }
+
+    @Override
+    public List<Personnel> findWeaponUserByWeaponBulletCaliber(String diameter, String length) {
+        return weaponRepository.findWeaponUserByWeaponBulletCaliber(diameter, length);
+    }
+
+    @Override
+    public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByGunType(String gunType) {
+        return weaponRepository.findPersonnelMedicalHistoryByGunType(gunType);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -62,5 +63,14 @@ public class PersonnelServiceImpl implements PersonnelService{
     @Override
     public void updatePersonnelStatusIfDepressed() {
         personnelRepository.updatePersonnelStatusIfDepressed();
+    }
+
+    @Override
+    public Personnel addExpertiseToPersonnelByPersonnelId(Map<String, Object> expertiseListMap, Long personnelId) {
+        Personnel personnel = personnelRepository.findByPersonnelId(personnelId).orElseThrow(EntityNotFoundException::new);
+        List<String> expertiseList = (List<String>) expertiseListMap.get("expertiseList");
+        personnel.setExpertise(expertiseList);
+
+        return personnelRepository.save(personnel);
     }
 }

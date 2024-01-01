@@ -12,4 +12,6 @@ public interface PersonnelMedicalHistoryService {
     public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByName(String personnelName);
 
     public PersonnelMedicalHistory updatePersonnelMedicalHistoryByEmailId(PersonnelMedicalHistory personnelMedicalHistory, String emailId);
+
+    public List<PersonnelMedicalHistory> showMedicalHistoryByEquipmentMaterialAndCaliberAndName(String materialsUsed, String caliber, String personnelName);
 }

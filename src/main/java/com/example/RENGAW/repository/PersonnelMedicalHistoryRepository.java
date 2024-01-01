@@ -24,4 +24,17 @@ public interface PersonnelMedicalHistoryRepository extends JpaRepository<Personn
             nativeQuery = true
     )
     public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByName(@Param("personnel_name") String personnelName);
+
+    @Query(
+            "SELECT pmh FROM PersonnelMedicalHistory pmh " +
+                    "JOIN pmh.personnel p " +
+                    "JOIN Weapon w ON p = w.personnel " +
+                    "JOIN Equipment e ON p = e.personnel " +
+                    "WHERE (p.firstName LIKE %:personnelName% OR p.lastName LIKE %:personnelName%) " +
+                    "AND w.bulletCaliber LIKE CONCAT(:caliber, '%') " +
+                    "AND e.materialsUsed LIKE %:materialsUsed%"
+    )
+    public List<PersonnelMedicalHistory> findMedicalHistoryByEquipmentMaterialAndCaliberAndName(@Param("materialsUsed") String materialsUsed,
+                                                                                         @Param("caliber") String caliber,
+                                                                                         @Param("personnelName") String personnelName);
 }

@@ -69,4 +69,9 @@ public class PersonnelMedicalHistoryServiceImpl implements PersonnelMedicalHisto
 
         return personnelMedicalHistoryRepository.save(personnelMedicalHistoryFromDB);
     }
+
+    @Override
+    public List<PersonnelMedicalHistory> showMedicalHistoryByEquipmentMaterialAndCaliberAndName(String materialsUsed, String caliber, String personnelName) {
+        return personnelMedicalHistoryRepository.findMedicalHistoryByEquipmentMaterialAndCaliberAndName(materialsUsed, caliber, personnelName);
+    }
 }
