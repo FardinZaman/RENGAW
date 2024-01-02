@@ -1,13 +1,11 @@
 package com.example.RENGAW.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 @Entity
 @Data
@@ -47,6 +45,6 @@ public class PersonnelMedicalHistory {
             name = "personnel_id",
             referencedColumnName = "personnelId"
     )
-    @JsonBackReference
+    @JsonIgnore
     private Personnel personnel;
 }

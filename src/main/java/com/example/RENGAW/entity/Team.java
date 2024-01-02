@@ -1,6 +1,7 @@
 package com.example.RENGAW.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -50,7 +52,10 @@ public class Team {
     private boolean hasBallisticExpert;
     private boolean hasExplosiveExpert;
     private boolean hasTechnologyExpert;
-    private List<String> additionalExpertise;
+
+    @ElementCollection
+    private List<String> additionalExpertise = new ArrayList<>();
+
     private Long totalMissionExecuted;
     private Long totalMissionSuccess;
     private Long totalCasualties;

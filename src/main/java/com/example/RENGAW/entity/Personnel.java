@@ -1,7 +1,7 @@
 package com.example.RENGAW.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -24,7 +23,6 @@ import java.util.List;
                 columnNames = "email_address"
         )
 )
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Personnel {
 
     @Id
@@ -43,7 +41,7 @@ public class Personnel {
             mappedBy = "personnel",
             optional = false
     )
-    @JsonManagedReference
+    @JsonIgnore
     private PersonnelMedicalHistory personnelMedicalHistory;
 
     private String firstName;
@@ -78,5 +76,6 @@ public class Personnel {
             name = "team_id",
             referencedColumnName = "teamId"
     )
+    @JsonIgnore
     private Team team;
 }

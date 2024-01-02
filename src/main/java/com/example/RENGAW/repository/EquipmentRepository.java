@@ -19,4 +19,6 @@ public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
                     "WHERE w.gunModel LIKE %:gunModel%"
     )
     public List<Equipment> findEquipmentUsedByPersonnelFromGunModel(@Param("gunModel") String gunModel);
+
+    public Equipment findByEquipmentTypeContainingIgnoreCase(String equipmentType);
 }

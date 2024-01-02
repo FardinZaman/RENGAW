@@ -16,6 +16,9 @@ public class PersonnelServiceImpl implements PersonnelService{
     @Autowired
     private PersonnelRepository personnelRepository;
 
+    @Autowired
+    private TeamService teamService;
+
     @Override
     public Personnel savePersonnel(Personnel personnel) {
         return personnelRepository.save(personnel);
@@ -70,6 +73,10 @@ public class PersonnelServiceImpl implements PersonnelService{
         Personnel personnel = personnelRepository.findByPersonnelId(personnelId).orElseThrow(EntityNotFoundException::new);
         List<String> expertiseList = (List<String>) expertiseListMap.get("expertiseList");
         personnel.setExpertise(expertiseList);
+
+        if(personnel.getTeam() != null){
+            teamService.modifyTeamExpertiseStatus(personnel, personnel.getTeam());
+        }
 
         return personnelRepository.save(personnel);
     }

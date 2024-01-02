@@ -1,5 +1,6 @@
 package com.example.RENGAW.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +16,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Equipment {
 
     @Id
@@ -65,5 +65,6 @@ public class Equipment {
             name = "personnel_id",
             referencedColumnName = "personnelId"
     )
+    @JsonIgnore
     private Personnel personnel;
 }

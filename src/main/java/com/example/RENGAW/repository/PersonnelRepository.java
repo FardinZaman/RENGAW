@@ -45,10 +45,11 @@ public interface PersonnelRepository extends JpaRepository<Personnel, Long> {
 
     public Long countByTeamTeamId(Long teamId);
 
-//    @Query(
-//            "SELECT COUNT(p) = SUM(CASE WHEN p.status = 'Available' THEN 1 ELSE 0 END) " +
-//                    "FROM Personnel p WHERE p.teamId = :teamId"
-//    )
-//    public boolean checkAllStatusAvailableByTeamId(@Param("teamId") Long teamId);
+    @Query(
+            "SELECT COUNT(p) = SUM(CASE WHEN p.status = 'Available' THEN 1 ELSE 0 END) " +
+                    "FROM Personnel p WHERE p.team.teamId = :teamId"
+    )
+    public boolean checkAllStatusAvailableByTeamId(@Param("teamId") Long teamId);
 
+    public List<Personnel> findAllByTeamTeamId(Long teamId);
 }
