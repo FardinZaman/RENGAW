@@ -4,6 +4,7 @@ import com.example.RENGAW.entity.enumaration.OperationStatus;
 import com.example.RENGAW.entity.enumaration.OperationType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -37,6 +38,7 @@ public class Operation {
     private OperationType operationType;
 
     @NotNull(message = "Provide Operation's Code Name")
+    @NotBlank(message = "Provide Operation's Code Name")
     private String operationCodeName;
 
     @Enumerated(EnumType.STRING)
