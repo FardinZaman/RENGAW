@@ -60,8 +60,10 @@ public class TeamServiceImpl implements TeamService{
 
     @Override
     public Team assignPersonnelToTeam(Long teamId, Long personnelId) {
-        Personnel personnel = personnelRepository.findByPersonnelId(personnelId).orElseThrow(EntityNotFoundException::new);
-        Team team = teamRepository.findByTeamId(teamId).orElseThrow(EntityNotFoundException::new);
+        Personnel personnel = personnelRepository.findByPersonnelId(personnelId)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Id : " + personnelId));
+        Team team = teamRepository.findByTeamId(teamId)
+                .orElseThrow(() -> new EntityNotFoundException("No Team Found By Id : " + teamId));
 
         personnel.setTeam(team);
         personnelRepository.save(personnel);
@@ -75,7 +77,8 @@ public class TeamServiceImpl implements TeamService{
 
     @Override
     public String isTeamReady(Long teamId) {
-        Team team = teamRepository.findByTeamId(teamId).orElseThrow(() -> new EntityNotFoundException("Team Not Found With Id" + teamId));
+        Team team = teamRepository.findByTeamId(teamId)
+                .orElseThrow(() -> new EntityNotFoundException("Team Not Found With Id" + teamId));
         if(isReady(team)){
             return "Team " + team.getTeamCodeName() + " is ready";
         }
@@ -87,24 +90,41 @@ public class TeamServiceImpl implements TeamService{
 
     @Override
     public List<Personnel> showTeamPersonnelByTeamId(Long teamId) {
-        return personnelRepository.findAllByTeamTeamId(teamId);
+        List<Personnel> personnelList = personnelRepository.findAllByTeamTeamId(teamId);
+
+        if(personnelList.isEmpty()){
+            throw new EntityNotFoundException("No Personnel Found of Team Id : " + teamId);
+        }
+
+        return personnelList;
     }
 
     @Override
     public List<Weapon> showWeaponsByTeamId(Long teamId) {
-        return teamRepository.findWeaponUsedByTeamPersonnelByTeamId(teamId);
+        List<Weapon> weaponList = teamRepository.findWeaponUsedByTeamPersonnelByTeamId(teamId);
+
+        if(weaponList.isEmpty()){
+            throw new EntityNotFoundException("No Weapon Found of Team Id : " + teamId);
+        }
+
+        return weaponList;
     }
 
     @Override
     public List<Equipment> showEquipmentByTeamId(Long teamId) {
-        return teamRepository.findEquipmentUsedByTeamPersonnelByTeamId(teamId);
+        List<Equipment> equipmentList = teamRepository.findEquipmentUsedByTeamPersonnelByTeamId(teamId);
+
+        if(equipmentList.isEmpty()){
+            throw new EntityNotFoundException("No Equipment Found of Team Id : " + teamId);
+        }
+
+        return equipmentList;
     }
 
     @Override
     public List<Weapon> showWeaponOfTeamByOneEquipmentType(String equipmentType) {
-        log.info("equipmentType : " + equipmentType);
-        Equipment equipment = equipmentRepository.findByEquipmentTypeContainingIgnoreCase(equipmentType);
-//        log.info(equipment.toString());
+        Equipment equipment = equipmentRepository.findByEquipmentTypeContainingIgnoreCase(equipmentType)
+                .orElseThrow(() -> new EntityNotFoundException("No Equipment Found By Type : " + equipmentType));
         Personnel personnel = personnelRepository.findByPersonnelId(equipment.getPersonnel().getPersonnelId())
                 .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Id : " + equipment.getPersonnel().getPersonnelId()));
 

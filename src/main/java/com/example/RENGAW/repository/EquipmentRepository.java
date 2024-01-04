@@ -7,10 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
-    public Equipment findByEquipmentSerialNumber(Long equipmentSerialNumber);
+    public Optional<Equipment> findByEquipmentSerialNumber(Long equipmentSerialNumber);
 
     @Query(
             "SELECT e FROM Equipment e " +
@@ -20,5 +21,5 @@ public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
     )
     public List<Equipment> findEquipmentUsedByPersonnelFromGunModel(@Param("gunModel") String gunModel);
 
-    public Equipment findByEquipmentTypeContainingIgnoreCase(String equipmentType);
+    public Optional<Equipment> findByEquipmentTypeContainingIgnoreCase(String equipmentType);
 }

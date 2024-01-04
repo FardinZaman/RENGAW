@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface WeaponRepository extends JpaRepository<Weapon, Long> {
-    Optional<Weapon> findByWeaponSerialNumber(Long weaponSerialNumber);
+    public Optional<Weapon> findByWeaponSerialNumber(Long weaponSerialNumber);
 
     @Query(
             "SELECT w.personnel FROM Weapon w WHERE w.weaponSerialNumber = :weaponSerialNumber"

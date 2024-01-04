@@ -59,7 +59,8 @@ public class PersonnelServiceImpl implements PersonnelService{
 
     @Override
     public String findPersonnelStatusByEmailId(String emailId) {
-        String personnelStatus = personnelRepository.findStatusByEmailId(emailId).orElseThrow(EntityNotFoundException::new);
+        String personnelStatus = personnelRepository.findStatusByEmailId(emailId)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel Status Found By Email : " + emailId));
         return "Status : " + personnelStatus;
     }
 
@@ -70,7 +71,8 @@ public class PersonnelServiceImpl implements PersonnelService{
 
     @Override
     public Personnel addExpertiseToPersonnelByPersonnelId(Map<String, Object> expertiseListMap, Long personnelId) {
-        Personnel personnel = personnelRepository.findByPersonnelId(personnelId).orElseThrow(EntityNotFoundException::new);
+        Personnel personnel = personnelRepository.findByPersonnelId(personnelId)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Id : " + personnelId));
         List<String> expertiseList = (List<String>) expertiseListMap.get("expertiseList");
         personnel.setExpertise(expertiseList);
 

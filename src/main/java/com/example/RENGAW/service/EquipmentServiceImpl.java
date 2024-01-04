@@ -26,8 +26,10 @@ public class EquipmentServiceImpl implements EquipmentService{
 
     @Override
     public Equipment assignEquipmentToPersonnelByEmailId(Long equipmentSerialNumber, String emailId) {
-        Personnel personnel = personnelRepository.findByEmailId(emailId).orElseThrow(EntityNotFoundException::new);
-        Equipment equipment = equipmentRepository.findByEquipmentSerialNumber(equipmentSerialNumber);
+        Personnel personnel = personnelRepository.findByEmailId(emailId)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Email : " + emailId));
+        Equipment equipment = equipmentRepository.findByEquipmentSerialNumber(equipmentSerialNumber)
+                .orElseThrow(() -> new EntityNotFoundException("No Equipment Found By Serial Number : " + equipmentSerialNumber));
         equipment.setPersonnel(personnel);
 
         return equipmentRepository.save(equipment);
@@ -35,7 +37,8 @@ public class EquipmentServiceImpl implements EquipmentService{
 
     @Override
     public Equipment assignEquipmentToPersonnelByPersonnelIdAndSaveEquipment(Long personnelId, Equipment equipment) {
-        Personnel personnel = personnelRepository.findByPersonnelId(personnelId).orElseThrow(EntityNotFoundException::new);
+        Personnel personnel = personnelRepository.findByPersonnelId(personnelId)
+                .orElseThrow(() -> new EntityNotFoundException("No personnel Found By Id : " + personnelId));
         equipment.setPersonnel(personnel);
 
         return equipmentRepository.save(equipment);
@@ -43,12 +46,19 @@ public class EquipmentServiceImpl implements EquipmentService{
 
     @Override
     public List<Equipment> findEquipmentUsedByPersonnelFromGunModel(String gunModel) {
-        return equipmentRepository.findEquipmentUsedByPersonnelFromGunModel(gunModel);
+        List<Equipment> equipmentList = equipmentRepository.findEquipmentUsedByPersonnelFromGunModel(gunModel);
+
+        if(equipmentList.isEmpty()){
+            throw new EntityNotFoundException("No Equipment of Personnel Found with Gun Model : " + gunModel);
+        }
+
+        return equipmentList;
     }
 
     @Override
     public Equipment updateWeightInGramsByEquipmentId(Long equipmentSerialNumber, double weightInGrams) {
-        Equipment equipment = equipmentRepository.findByEquipmentSerialNumber(equipmentSerialNumber);
+        Equipment equipment = equipmentRepository.findByEquipmentSerialNumber(equipmentSerialNumber)
+                .orElseThrow(() -> new EntityNotFoundException("No Equipment Found By Serial Number : " + equipmentSerialNumber));
         equipment.setWeightInGrams(weightInGrams);
 
         return equipmentRepository.save(equipment);

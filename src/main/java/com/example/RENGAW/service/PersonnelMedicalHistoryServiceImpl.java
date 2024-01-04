@@ -23,7 +23,8 @@ public class PersonnelMedicalHistoryServiceImpl implements PersonnelMedicalHisto
 
     @Override
     public PersonnelMedicalHistory savePersonnelMedicalHistory(PersonnelMedicalHistory personnelMedicalHistory, Long personnelId) {
-        Personnel personnel = personnelRepository.findByPersonnelId(personnelId).orElseThrow(EntityNotFoundException::new);
+        Personnel personnel = personnelRepository.findByPersonnelId(personnelId)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Id : " + personnelId));
         personnelMedicalHistory.setPersonnel(personnel);
 
         return personnelMedicalHistoryRepository.save(personnelMedicalHistory);
@@ -31,7 +32,8 @@ public class PersonnelMedicalHistoryServiceImpl implements PersonnelMedicalHisto
 
     @Override
     public PersonnelMedicalHistory updatePersonnelMedicalHistoryByPersonnelId(PersonnelMedicalHistory personnelMedicalHistory, Long personnelId) {
-        PersonnelMedicalHistory personnelMedicalHistoryFromDB = personnelMedicalHistoryRepository.findByPersonnelPersonnelId(personnelId).orElseThrow(EntityNotFoundException::new);
+        PersonnelMedicalHistory personnelMedicalHistoryFromDB = personnelMedicalHistoryRepository.findByPersonnelPersonnelId(personnelId)
+                .orElseThrow(() -> new EntityNotFoundException("No Medical History Found By Personnel Id : " + personnelId));
 
         personnelMedicalHistoryFromDB.setSurgeries(personnelMedicalHistory.getSurgeries());
         personnelMedicalHistoryFromDB.setChronicIllness(personnelMedicalHistory.getChronicIllness());
@@ -48,14 +50,22 @@ public class PersonnelMedicalHistoryServiceImpl implements PersonnelMedicalHisto
 
     @Override
     public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByName(String personnelName) {
-        return personnelMedicalHistoryRepository.findPersonnelMedicalHistoryByName(personnelName);
+        List<PersonnelMedicalHistory> personnelMedicalHistoryList = personnelMedicalHistoryRepository.findPersonnelMedicalHistoryByName(personnelName);
+
+        if(personnelMedicalHistoryList.isEmpty()){
+            throw new EntityNotFoundException("No Medical History with Name : " + personnelName);
+        }
+
+        return personnelMedicalHistoryList;
     }
 
     @Override
     public PersonnelMedicalHistory updatePersonnelMedicalHistoryByEmailId(PersonnelMedicalHistory personnelMedicalHistory, String emailId) {
-        Personnel personnel = personnelRepository.findByEmailId(emailId).orElseThrow(EntityNotFoundException::new);
+        Personnel personnel = personnelRepository.findByEmailId(emailId)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Email : " + emailId));
         PersonnelMedicalHistory personnelMedicalHistoryFromDB =
-                personnelMedicalHistoryRepository.findByPersonnelPersonnelId(personnel.getPersonnelId()).orElseThrow(EntityNotFoundException::new);
+                personnelMedicalHistoryRepository.findByPersonnelPersonnelId(personnel.getPersonnelId())
+                        .orElseThrow(() -> new EntityNotFoundException("No Medical History Found By Personnel Id : " + personnel.getPersonnelId()));
 
         personnelMedicalHistoryFromDB.setSurgeries(personnelMedicalHistory.getSurgeries());
         personnelMedicalHistoryFromDB.setChronicIllness(personnelMedicalHistory.getChronicIllness());
@@ -72,6 +82,16 @@ public class PersonnelMedicalHistoryServiceImpl implements PersonnelMedicalHisto
 
     @Override
     public List<PersonnelMedicalHistory> showMedicalHistoryByEquipmentMaterialAndCaliberAndName(String materialsUsed, String caliber, String personnelName) {
-        return personnelMedicalHistoryRepository.findMedicalHistoryByEquipmentMaterialAndCaliberAndName(materialsUsed, caliber, personnelName);
+        List<PersonnelMedicalHistory> personnelMedicalHistoryList =
+                personnelMedicalHistoryRepository.findMedicalHistoryByEquipmentMaterialAndCaliberAndName(materialsUsed, caliber, personnelName);
+
+        if(personnelMedicalHistoryList.isEmpty()){
+            throw new EntityNotFoundException("No Personnel Medical History matches following requirements : " +
+                    "\nMaterials : " + materialsUsed +
+                    "\nCaliber : " + caliber +
+                    "\nPersonnel Name : " + personnelName);
+        }
+
+        return personnelMedicalHistoryList;
     }
 }

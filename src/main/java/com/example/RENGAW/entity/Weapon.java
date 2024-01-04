@@ -3,21 +3,21 @@ package com.example.RENGAW.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "personnel")
 public class Weapon {
 
     @Id
@@ -33,10 +33,12 @@ public class Weapon {
     private Long weaponSerialNumber;
 
     @NotNull(message = "Provide Type of the Gun")
+    @NotBlank(message = "Provide Type of the Gun")
     @Size(min = 5, max = 50)
     private String gunType;
 
     @NotNull(message = "Provide Model of the Gun")
+    @NotBlank(message = "Provide Model of the Gun")
     @Pattern(regexp = "^[A-Za-z]+[-\\s]?\\d+$", message = "Gun Model must follow the format 'word-number'")
     private String gunModel;
 
