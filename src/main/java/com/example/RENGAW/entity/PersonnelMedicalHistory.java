@@ -1,5 +1,6 @@
 package com.example.RENGAW.entity;
 
+import com.example.RENGAW.entity.enumaration.StressLevel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,7 +32,10 @@ public class PersonnelMedicalHistory {
     private String allergies;
     private String hazardousExposure;
     private String immunizations;
-    private String stressLevels;
+
+    @Enumerated(EnumType.STRING)
+    private StressLevel stressLevels;
+
     private String mentalHealth;
     private String lifestyleHabits;
 

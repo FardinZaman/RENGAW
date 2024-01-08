@@ -39,7 +39,7 @@ public class Weapon {
 
     @NotNull(message = "Provide Model of the Gun")
     @NotBlank(message = "Provide Model of the Gun")
-    @Pattern(regexp = "^[A-Za-z]+[-\\s]?\\d+$", message = "Gun Model must follow the format 'word-number'")
+//    @Pattern(regexp = "^[A-Za-z]+[-\\s]?\\d+$", message = "Gun Model must follow the format 'word-number'")
     private String gunModel;
 
     @NotNull(message = "Provide Caliber of bullet used in the Gun")

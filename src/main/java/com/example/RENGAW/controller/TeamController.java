@@ -30,8 +30,13 @@ public class TeamController {
     }
 
     @PutMapping("/assignToTeam/{tid}/{pid}")
-    public Team assignPersonnelToTeam(@PathVariable("tid") Long teamId, @PathVariable("pid") Long personnelId){
-        return teamService.assignPersonnelToTeam(teamId, personnelId);
+    public Team assignPersonnelToTeamByTeamId(@PathVariable("tid") Long teamId, @PathVariable("pid") Long personnelId){
+        return teamService.assignPersonnelToTeamByTeamId(teamId, personnelId);
+    }
+
+    @PutMapping("/assignToTeam/teamCode/{tcn}/{pid}")
+    public Team assignPersonnelToTeamByTeamCodeName(@PathVariable("tcn") String teamCodeName, @PathVariable("pid") Long personnelId){
+        return teamService.assignPersonnelToTeamByTeamCodeName(teamCodeName, personnelId);
     }
 
     @GetMapping("/isReady/{tid}")

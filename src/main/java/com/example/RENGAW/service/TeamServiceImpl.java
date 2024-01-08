@@ -4,6 +4,8 @@ import com.example.RENGAW.entity.Equipment;
 import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.entity.Team;
 import com.example.RENGAW.entity.Weapon;
+import com.example.RENGAW.exception.PersonnelAlreadyAssignedException;
+import com.example.RENGAW.exception.TeamFullException;
 import com.example.RENGAW.repository.EquipmentRepository;
 import com.example.RENGAW.repository.PersonnelRepository;
 import com.example.RENGAW.repository.TeamRepository;
@@ -55,24 +57,48 @@ public class TeamServiceImpl implements TeamService{
 
     @Override
     public Team createTeam(Team team) {
-        return teamRepository.save(team);
+        return teamRepository.save(assignPersonnelToTeam(team, team.getCurrentLeadId()));
     }
 
-    @Override
-    public Team assignPersonnelToTeam(Long teamId, Long personnelId) {
+    public Team assignPersonnelToTeam(Team team, Long personnelId){
         Personnel personnel = personnelRepository.findByPersonnelId(personnelId)
                 .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Id : " + personnelId));
-        Team team = teamRepository.findByTeamId(teamId)
-                .orElseThrow(() -> new EntityNotFoundException("No Team Found By Id : " + teamId));
 
-        personnel.setTeam(team);
-        personnelRepository.save(personnel);
+        if(team.getTeamId() != null &&
+                (Objects.equals(team.getTeamMemberCount(), personnelRepository.countByTeamTeamId(team.getTeamId())))){
+            throw new TeamFullException("Team " + team.getTeamCodeName() + " is already full");
+        }
+
+        if(personnel.getTeam() != null){
+            throw new PersonnelAlreadyAssignedException(personnel.getFirstName() + " " +
+                    personnel.getLastName() + " already assigned to team " +
+                    personnel.getTeam().getTeamCodeName());
+        }
 
         if(personnel.getExpertise() != null){
             modifyTeamExpertiseStatus(personnel, team);
         }
 
-        return teamRepository.save(team);
+        personnel.setTeam(team);
+        personnelRepository.save(personnel);
+
+        return team;
+    }
+
+    @Override
+    public Team assignPersonnelToTeamByTeamId(Long teamId, Long personnelId) {
+        Team team = teamRepository.findByTeamId(teamId)
+                .orElseThrow(() -> new EntityNotFoundException("No Team Found By Id : " + teamId));
+
+        return assignPersonnelToTeam(team, personnelId);
+    }
+
+    @Override
+    public Team assignPersonnelToTeamByTeamCodeName(String teamCodeName, Long personnelId) {
+        Team team = teamRepository.findByTeamCodeName(teamCodeName)
+                .orElseThrow(() -> new EntityNotFoundException("No Team Found By Code : " + teamCodeName));
+
+        return assignPersonnelToTeam(team, personnelId);
     }
 
     @Override
@@ -130,4 +156,5 @@ public class TeamServiceImpl implements TeamService{
 
         return teamRepository.findWeaponUsedByTeamPersonnelByTeamId(personnel.getTeam().getTeamId());
     }
+
 }

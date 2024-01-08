@@ -30,4 +30,6 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
                     "WHERE t.teamId = :teamId"
     )
     public List<Equipment> findEquipmentUsedByTeamPersonnelByTeamId(@Param("teamId") Long teamId);
+
+    Optional<Team> findByTeamCodeName(String teamCodeName);
 }

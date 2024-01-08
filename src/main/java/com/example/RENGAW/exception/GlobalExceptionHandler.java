@@ -21,4 +21,22 @@ public class GlobalExceptionHandler {
     public String handleValidationException(ValidationException validationException){
         return validationException.getMessage();
     }
+
+    @ExceptionHandler(TeamNotReadyException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public String handleTeamNotReadyException(TeamNotReadyException teamNotReadyException){
+        return teamNotReadyException.getMessage();
+    }
+
+    @ExceptionHandler(TeamFullException.class)
+    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+    public String handleTeamFullException(TeamFullException teamFullException){
+        return teamFullException.getMessage();
+    }
+
+    @ExceptionHandler(PersonnelAlreadyAssignedException.class)
+    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+    public String handlePersonnelAlreadyAssignedException(PersonnelAlreadyAssignedException personnelAlreadyAssignedException){
+        return personnelAlreadyAssignedException.getMessage();
+    }
 }

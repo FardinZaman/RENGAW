@@ -15,7 +15,7 @@ public interface TeamService {
 
     public Team createTeam(Team team);
 
-    public Team assignPersonnelToTeam(Long teamId, Long personnelId);
+    public Team assignPersonnelToTeamByTeamId(Long teamId, Long personnelId);
 
     public String isTeamReady(Long teamId);
 
@@ -26,4 +26,6 @@ public interface TeamService {
     public List<Equipment> showEquipmentByTeamId(Long teamId);
 
     public List<Weapon> showWeaponOfTeamByOneEquipmentType(String equipmentType);
+
+    public Team assignPersonnelToTeamByTeamCodeName(String teamCodeName, Long personnelId);
 }

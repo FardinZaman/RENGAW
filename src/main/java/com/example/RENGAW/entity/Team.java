@@ -1,12 +1,10 @@
 package com.example.RENGAW.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
@@ -19,6 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(
+        uniqueConstraints = @UniqueConstraint(
+                name = "teamCodeName_unique",
+                columnNames = "team_code_name"
+        )
+)
 public class Team {
 
     @Id
@@ -52,7 +56,7 @@ public class Team {
     private boolean hasTechnologyExpert;
 
     @ElementCollection
-    private List<String> additionalExpertise = new ArrayList<>();
+    private List<String> additionalExpertise;
 
     private Long totalMissionExecuted;
     private Long totalMissionSuccess;
