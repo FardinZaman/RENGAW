@@ -63,21 +63,8 @@ public class PersonnelMedicalHistoryServiceImpl implements PersonnelMedicalHisto
     public PersonnelMedicalHistory updatePersonnelMedicalHistoryByEmailId(PersonnelMedicalHistory personnelMedicalHistory, String emailId) {
         Personnel personnel = personnelRepository.findByEmailId(emailId)
                 .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Email : " + emailId));
-        PersonnelMedicalHistory personnelMedicalHistoryFromDB =
-                personnelMedicalHistoryRepository.findByPersonnelPersonnelId(personnel.getPersonnelId())
-                        .orElseThrow(() -> new EntityNotFoundException("No Medical History Found By Personnel Id : " + personnel.getPersonnelId()));
 
-        personnelMedicalHistoryFromDB.setSurgeries(personnelMedicalHistory.getSurgeries());
-        personnelMedicalHistoryFromDB.setChronicIllness(personnelMedicalHistory.getChronicIllness());
-        personnelMedicalHistoryFromDB.setMedications(personnelMedicalHistory.getMedications());
-        personnelMedicalHistoryFromDB.setAllergies(personnelMedicalHistory.getAllergies());
-        personnelMedicalHistoryFromDB.setHazardousExposure(personnelMedicalHistory.getHazardousExposure());
-        personnelMedicalHistoryFromDB.setImmunizations(personnelMedicalHistory.getImmunizations());
-        personnelMedicalHistoryFromDB.setStressLevels(personnelMedicalHistory.getStressLevels());
-        personnelMedicalHistoryFromDB.setMentalHealth(personnelMedicalHistory.getMentalHealth());
-        personnelMedicalHistoryFromDB.setLifestyleHabits(personnelMedicalHistory.getLifestyleHabits());
-
-        return personnelMedicalHistoryRepository.save(personnelMedicalHistoryFromDB);
+        return updatePersonnelMedicalHistoryByPersonnelId(personnelMedicalHistory, personnel.getPersonnelId());
     }
 
     @Override

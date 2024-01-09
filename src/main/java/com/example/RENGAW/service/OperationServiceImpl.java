@@ -2,11 +2,14 @@ package com.example.RENGAW.service;
 
 import com.example.RENGAW.dto.OperationDTO;
 import com.example.RENGAW.dto.mapper.OperationDTOMapper;
+import com.example.RENGAW.email.EmailSenderService;
 import com.example.RENGAW.entity.Operation;
+import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.entity.Team;
 import com.example.RENGAW.entity.enumaration.OperationType;
 import com.example.RENGAW.exception.TeamNotReadyException;
 import com.example.RENGAW.repository.OperationRepository;
+import com.example.RENGAW.repository.PersonnelRepository;
 import com.example.RENGAW.repository.TeamRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +26,32 @@ public class OperationServiceImpl implements OperationService{
     private OperationRepository operationRepository;
 
     @Autowired
+    private PersonnelRepository personnelRepository;
+
+    @Autowired
     private TeamRepository teamRepository;
 
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private EmailSenderService emailSenderService;
+
     private OperationDTOMapper operationDTOMapper;
+
+    public void sendEmailToTeamPersonnel(Team team, Operation operation) {
+        List<Personnel> personnelList = personnelRepository.findAllByTeamTeamId(team.getTeamId());
+        String operationMessage = "New Operation Assigned.\n" +
+                operation.toString() +
+                "\n\nContact your command.";
+
+        for (Personnel personnel:personnelList){
+            String mailBody = personnel.getCurrentRank() + " " + personnel.getFirstName() + " " + personnel.getLastName() + "\n\n" + operationMessage;
+            emailSenderService.sendEmail(personnel.getEmailId(), "Operation Details", mailBody);
+        }
+
+        System.out.println("Mail Sent To Personnels");
+    }
 
     @Override
     public Operation saveOperation(Operation operation) {
@@ -48,6 +71,7 @@ public class OperationServiceImpl implements OperationService{
         else {
             throw new TeamNotReadyException("Team " + team.getTeamCodeName() + " is not ready");
         }
+        sendEmailToTeamPersonnel(team, operation);
 
         return operationRepository.save(operation);
     }

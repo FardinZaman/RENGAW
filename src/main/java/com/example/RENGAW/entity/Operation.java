@@ -19,7 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = "operationTeams")
 public class Operation {
 
     @Id
@@ -44,12 +43,17 @@ public class Operation {
     @Enumerated(EnumType.STRING)
     private OperationStatus operationStatus;
 
+    @NotNull(message = "Provide Operation Zone")
+    @NotBlank(message = "Provide Operation Zone")
     private String operationZone;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Provide Operation Date")
     private Date operationDate;
 
     @Size(max = 10000, message = "Brief shouldn't exceed 10000 characters.")
+    @NotNull(message = "Provide Operation Brief")
+    @NotBlank(message = "Provide Operation Brief")
     private String operationBrief;
 
     private Long totalCasualties;
@@ -74,4 +78,12 @@ public class Operation {
     )
     @JsonIgnore
     private List<Team> operationTeams;
+
+    public String toString(){
+        return "Type : " + getOperationType() + "\n" +
+                "Code name : " + getOperationCodeName() + "\n" +
+                "Zone : " + getOperationZone() + "\n" +
+                "Date : " + getOperationDate() + "\n" +
+                "Brief : " + getOperationBrief();
+    }
 }
