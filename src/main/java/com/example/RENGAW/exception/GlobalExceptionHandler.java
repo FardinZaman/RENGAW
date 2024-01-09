@@ -39,4 +39,10 @@ public class GlobalExceptionHandler {
     public String handlePersonnelAlreadyAssignedException(PersonnelAlreadyAssignedException personnelAlreadyAssignedException){
         return personnelAlreadyAssignedException.getMessage();
     }
+
+    @ExceptionHandler(DateNotValidException.class)
+    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+    public String handleDateNotValidException(DateNotValidException dateNotValidException){
+        return dateNotValidException.getMessage();
+    }
 }

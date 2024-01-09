@@ -6,7 +6,9 @@ import com.example.RENGAW.email.EmailSenderService;
 import com.example.RENGAW.entity.Operation;
 import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.entity.Team;
+import com.example.RENGAW.entity.enumaration.OperationStatus;
 import com.example.RENGAW.entity.enumaration.OperationType;
+import com.example.RENGAW.exception.DateNotValidException;
 import com.example.RENGAW.exception.TeamNotReadyException;
 import com.example.RENGAW.repository.OperationRepository;
 import com.example.RENGAW.repository.PersonnelRepository;
@@ -16,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,6 +54,22 @@ public class OperationServiceImpl implements OperationService{
         System.out.println("Mail Sent To Personnels");
     }
 
+    public boolean checkIfDateConflict(Operation operation1, Operation operation2){
+        return operation2.getOperationStatus() == OperationStatus.valueOf("ACTIVE") &&
+                operation1.getOperationStatus() == OperationStatus.valueOf("ACTIVE") &&
+                operation1.getOperationDate().equals(operation2.getOperationDate());
+    }
+
+    private void checkConflictWithActiveOperations(Operation operation, Team team) {
+        List<Operation> operationListFromDB = operationRepository.findByTeamCodeName(team.getTeamCodeName());
+        for(Operation operationFromDB:operationListFromDB){
+            if(checkIfDateConflict(operationFromDB, operation)){
+                throw new DateNotValidException("Team " + team.getTeamCodeName() + " has an assigned" +
+                        " ACTIVE operation on Date : " + operation.getOperationDate());
+            }
+        }
+    }
+
     @Override
     public Operation saveOperation(Operation operation) {
         return operationRepository.save(operation);
@@ -64,6 +81,8 @@ public class OperationServiceImpl implements OperationService{
                 .orElseThrow(() -> new EntityNotFoundException("No Operation Found by Id : " + operationId));
         Team team = teamRepository.findByTeamId(teamId)
                 .orElseThrow(() -> new EntityNotFoundException("No Team Found by Id : " + teamId));
+
+        checkConflictWithActiveOperations(operation, team);
 
         if(teamService.isReady(team)){
             operation.getOperationTeams().add(team);
