@@ -86,4 +86,15 @@ public class OperationServiceImpl implements OperationService{
                 .map(new OperationDTOMapper())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Team> showTeamsAssignedToOperation(String operationCodeName) {
+        List<Team> teamList = operationRepository.findTeamByOperationCodeName(operationCodeName);
+
+        if(teamList.isEmpty()){
+            throw new EntityNotFoundException("No Team Found with Operation Code : " + operationCodeName);
+        }
+
+        return teamList;
+    }
 }

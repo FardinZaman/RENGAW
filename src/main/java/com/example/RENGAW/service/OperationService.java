@@ -2,6 +2,7 @@ package com.example.RENGAW.service;
 
 import com.example.RENGAW.dto.OperationDTO;
 import com.example.RENGAW.entity.Operation;
+import com.example.RENGAW.entity.Team;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +17,6 @@ public interface OperationService {
     public List<OperationDTO> showOperationByOperationType(String operationType);
 
     public List<OperationDTO> showOperationByTeamCodeName(String teamCodeName);
+
+    public List<Team> showTeamsAssignedToOperation(String operationCodeName);
 }

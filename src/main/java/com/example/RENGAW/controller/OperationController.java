@@ -2,6 +2,7 @@ package com.example.RENGAW.controller;
 
 import com.example.RENGAW.dto.OperationDTO;
 import com.example.RENGAW.entity.Operation;
+import com.example.RENGAW.entity.Team;
 import com.example.RENGAW.service.OperationService;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
@@ -47,5 +48,10 @@ public class OperationController {
     @GetMapping("/showOP/team/{tcn}")
     public List<OperationDTO> showOperationByTeamCodeName(@PathVariable("tcn") String teamCodeName){
         return operationService.showOperationByTeamCodeName(teamCodeName);
+    }
+
+    @GetMapping("/showTeam/op/{ocn}")
+    public List<Team> showTeamsAssignedToOperation(@PathVariable("ocn") String operationCodeName){
+        return operationService.showTeamsAssignedToOperation(operationCodeName);
     }
 }
