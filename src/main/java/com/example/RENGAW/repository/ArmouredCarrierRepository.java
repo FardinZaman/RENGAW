@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ArmouredCarrierRepository extends JpaRepository<ArmouredCarrier, Long> {
-    public List<ArmouredCarrier> findByTeamTeamId(Long teamId);
+    public List<ArmouredCarrier> findByTeamId(Long teamId);
 }

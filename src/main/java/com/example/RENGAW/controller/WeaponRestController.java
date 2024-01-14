@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rengaw")
-public class WeaponController {
+public class WeaponRestController {
 
     @Autowired
     private WeaponService weaponService;
@@ -52,7 +52,7 @@ public class WeaponController {
 
     @GetMapping("/showUsersWeapon")
     public List<Weapon> findWeaponUsedByPersonnelByEmailId(@RequestParam("mail") String emailId){
-        return weaponService.findWeaponUsedByPersonnelByEmailId(emailId);
+        return weaponService.findWeaponUsedByPersonnelByEmail(emailId);
     }
 
     @GetMapping("/showUsersWeaponById")

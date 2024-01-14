@@ -6,15 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.*;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@ToString(exclude = "personnel")
 public class Equipment {
 
     @Id
@@ -29,30 +22,30 @@ public class Equipment {
     )
     private Long equipmentSerialNumber;
 
-    @NotNull(message = "Provide Equipment Type")
-    @NotBlank(message = "Provide Equipment Type")
+    @NotNull
+    @NotBlank
     private String equipmentType;
 
-    @NotNull(message = "Provide Equipment Model")
-    @NotBlank(message = "Provide Equipment Model")
+    @NotNull
+    @NotBlank
     private String equipmentModel;
 
-    @NotNull(message = "Provide lethality Status")
+    @NotNull
     private boolean lethal;
 
     private String productionCompany;
 
-    @NotNull(message = "Provide Production Year of the Equipment")
-    @Pattern(regexp = "^\\d{4}$", message = "Production Year must be a valid year in 'YYYY' format")
+    @NotNull
+    @Pattern(regexp = "^\\d{4}$")
     private String productionYear;
 
-    @NotNull(message = "Provide Materials Used in Equipment")
+    @NotNull
     private String materialsUsed;
 
-    @NotNull(message = "Provide Radio-Activity Status")
+    @NotNull
     private boolean radioActive;
 
-    @NotNull(message = "Provide Weight of Equipment")
+    @NotNull
     private double weightInGrams;
 
     @Size(max = 10000)
@@ -64,8 +57,115 @@ public class Equipment {
     )
     @JoinColumn(
             name = "personnel_id",
-            referencedColumnName = "personnelId"
+            referencedColumnName = "id"
     )
     @JsonIgnore
     private Personnel personnel;
+
+    public Equipment() {
+    }
+
+    public Long getEquipmentSerialNumber() {
+        return equipmentSerialNumber;
+    }
+
+    public void setEquipmentSerialNumber(Long equipmentSerialNumber) {
+        this.equipmentSerialNumber = equipmentSerialNumber;
+    }
+
+    public String getEquipmentType() {
+        return equipmentType;
+    }
+
+    public void setEquipmentType(String equipmentType) {
+        this.equipmentType = equipmentType;
+    }
+
+    public String getEquipmentModel() {
+        return equipmentModel;
+    }
+
+    public void setEquipmentModel(String equipmentModel) {
+        this.equipmentModel = equipmentModel;
+    }
+
+    public boolean isLethal() {
+        return lethal;
+    }
+
+    public void setLethal(boolean lethal) {
+        this.lethal = lethal;
+    }
+
+    public String getProductionCompany() {
+        return productionCompany;
+    }
+
+    public void setProductionCompany(String productionCompany) {
+        this.productionCompany = productionCompany;
+    }
+
+    public String getProductionYear() {
+        return productionYear;
+    }
+
+    public void setProductionYear(String productionYear) {
+        this.productionYear = productionYear;
+    }
+
+    public String getMaterialsUsed() {
+        return materialsUsed;
+    }
+
+    public void setMaterialsUsed(String materialsUsed) {
+        this.materialsUsed = materialsUsed;
+    }
+
+    public boolean isRadioActive() {
+        return radioActive;
+    }
+
+    public void setRadioActive(boolean radioActive) {
+        this.radioActive = radioActive;
+    }
+
+    public double getWeightInGrams() {
+        return weightInGrams;
+    }
+
+    public void setWeightInGrams(double weightInGrams) {
+        this.weightInGrams = weightInGrams;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Personnel getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(Personnel personnel) {
+        this.personnel = personnel;
+    }
+
+    @Override
+    public String toString() {
+        return "Equipment{" +
+                "equipmentSerialNumber=" + equipmentSerialNumber +
+                ", equipmentType='" + equipmentType + '\'' +
+                ", equipmentModel='" + equipmentModel + '\'' +
+                ", lethal=" + lethal +
+                ", productionCompany='" + productionCompany + '\'' +
+                ", productionYear='" + productionYear + '\'' +
+                ", materialsUsed='" + materialsUsed + '\'' +
+                ", radioActive=" + radioActive +
+                ", weightInGrams=" + weightInGrams +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

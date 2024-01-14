@@ -4,23 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Table(
         uniqueConstraints = @UniqueConstraint(
                 name = "emailId_unique",
                 columnNames = "email_address"
         )
 )
-@ToString(exclude = {"personnelMedicalHistory", "team"})
 public class Personnel {
 
     @Id
@@ -33,7 +26,7 @@ public class Personnel {
             strategy = GenerationType.SEQUENCE,
             generator = "personnel_sequence"
     )
-    private Long personnelId;
+    private Long id;
 
     @OneToOne(
             mappedBy = "personnel",
@@ -49,15 +42,15 @@ public class Personnel {
             name = "email_address",
             nullable = false
     )
-    @Email(message = "Provide Organization's Email Id")
-    private String emailId;
+    @Email
+    private String email;
 
-    @NotNull(message = "Provide Current Status")
+    @NotNull
     private String status;
 
     private String currentRank;
 
-    @NotNull(message = "Provide Background")
+    @NotNull
     private String background;
 
     private Long totalOperation;
@@ -72,8 +65,123 @@ public class Personnel {
     )
     @JoinColumn(
             name = "team_id",
-            referencedColumnName = "teamId"
+            referencedColumnName = "id"
     )
     @JsonIgnore
     private Team team;
+
+    public Personnel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public PersonnelMedicalHistory getPersonnelMedicalHistory() {
+        return personnelMedicalHistory;
+    }
+
+    public void setPersonnelMedicalHistory(PersonnelMedicalHistory personnelMedicalHistory) {
+        this.personnelMedicalHistory = personnelMedicalHistory;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCurrentRank() {
+        return currentRank;
+    }
+
+    public void setCurrentRank(String currentRank) {
+        this.currentRank = currentRank;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public Long getTotalOperation() {
+        return totalOperation;
+    }
+
+    public void setTotalOperation(Long totalOperation) {
+        this.totalOperation = totalOperation;
+    }
+
+    public Long getReportedKillCount() {
+        return reportedKillCount;
+    }
+
+    public void setReportedKillCount(Long reportedKillCount) {
+        this.reportedKillCount = reportedKillCount;
+    }
+
+    public List<String> getExpertise() {
+        return expertise;
+    }
+
+    public void setExpertise(List<String> expertise) {
+        this.expertise = expertise;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    @Override
+    public String toString() {
+        return "Personnel{" +
+                "personnelId=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailId='" + email + '\'' +
+                ", status='" + status + '\'' +
+                ", currentRank='" + currentRank + '\'' +
+                ", background='" + background + '\'' +
+                ", totalOperation=" + totalOperation +
+                ", reportedKillCount=" + reportedKillCount +
+                ", expertise=" + expertise +
+                '}';
+    }
 }

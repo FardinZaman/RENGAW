@@ -13,13 +13,13 @@ import java.util.Optional;
 
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
-    public Optional<Team> findByTeamId(Long teamId);
+//    public Optional<Team> findByTeamId(Long teamId);
 
     @Query(
             "SELECT w FROM Weapon w " +
                     "JOIN w.personnel p " +
                     "JOIN p.team t " +
-                    "WHERE t.teamId = :teamId"
+                    "WHERE t.id = :teamId"
     )
     public List<Weapon> findWeaponUsedByTeamPersonnelByTeamId(@Param("teamId") Long teamId);
 
@@ -27,7 +27,7 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
             "SELECT e FROM Equipment e " +
                     "JOIN e.personnel p " +
                     "JOIN p.team t " +
-                    "WHERE t.teamId = :teamId"
+                    "WHERE t.id = :teamId"
     )
     public List<Equipment> findEquipmentUsedByTeamPersonnelByTeamId(@Param("teamId") Long teamId);
 

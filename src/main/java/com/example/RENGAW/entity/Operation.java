@@ -1,24 +1,16 @@
 package com.example.RENGAW.entity;
 
-import com.example.RENGAW.entity.enumaration.OperationStatus;
-import com.example.RENGAW.entity.enumaration.OperationType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class Operation {
 
     @Id
@@ -31,35 +23,35 @@ public class Operation {
             strategy = GenerationType.SEQUENCE,
             generator = "operation_sequence"
     )
-    private Long operationId;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private OperationType operationType;
 
-    @NotNull(message = "Provide Operation's Code Name")
-    @NotBlank(message = "Provide Operation's Code Name")
+    @NotNull
+    @NotBlank
     private String operationCodeName;
 
     @Enumerated(EnumType.STRING)
     private OperationStatus operationStatus;
 
-    @NotNull(message = "Provide Operation Zone")
-    @NotBlank(message = "Provide Operation Zone")
+    @NotNull
+    @NotBlank
     private String operationZone;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Provide Operation Date")
+    @NotNull
     private Date operationDate;
 
-    @Size(max = 10000, message = "Brief shouldn't exceed 10000 characters.")
-    @NotNull(message = "Provide Operation Brief")
-    @NotBlank(message = "Provide Operation Brief")
+    @Size(max = 10000)
+    @NotNull
+    @NotBlank
     private String operationBrief;
 
     private Long totalCasualties;
     private Long vehicleDestroyed;
 
-    @Size(max = 100000, message = "Gathered information shouldn't exceed 100000 characters.")
+    @Size(max = 100000)
     private String infoGathered;
 
     @ManyToMany(
@@ -69,16 +61,108 @@ public class Operation {
             name = "team_operation_mapping",
             joinColumns = @JoinColumn(
                     name = "operation_id",
-                    referencedColumnName = "operationId"
+                    referencedColumnName = "id"
             ),
             inverseJoinColumns = @JoinColumn(
                     name = "team_id",
-                    referencedColumnName = "teamId"
+                    referencedColumnName = "id"
             )
     )
     @JsonIgnore
     private List<Team> operationTeams;
 
+    public Operation() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public OperationType getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(OperationType operationType) {
+        this.operationType = operationType;
+    }
+
+    public String getOperationCodeName() {
+        return operationCodeName;
+    }
+
+    public void setOperationCodeName(String operationCodeName) {
+        this.operationCodeName = operationCodeName;
+    }
+
+    public OperationStatus getOperationStatus() {
+        return operationStatus;
+    }
+
+    public void setOperationStatus(OperationStatus operationStatus) {
+        this.operationStatus = operationStatus;
+    }
+
+    public String getOperationZone() {
+        return operationZone;
+    }
+
+    public void setOperationZone(String operationZone) {
+        this.operationZone = operationZone;
+    }
+
+    public Date getOperationDate() {
+        return operationDate;
+    }
+
+    public void setOperationDate(Date operationDate) {
+        this.operationDate = operationDate;
+    }
+
+    public String getOperationBrief() {
+        return operationBrief;
+    }
+
+    public void setOperationBrief(String operationBrief) {
+        this.operationBrief = operationBrief;
+    }
+
+    public Long getTotalCasualties() {
+        return totalCasualties;
+    }
+
+    public void setTotalCasualties(Long totalCasualties) {
+        this.totalCasualties = totalCasualties;
+    }
+
+    public Long getVehicleDestroyed() {
+        return vehicleDestroyed;
+    }
+
+    public void setVehicleDestroyed(Long vehicleDestroyed) {
+        this.vehicleDestroyed = vehicleDestroyed;
+    }
+
+    public String getInfoGathered() {
+        return infoGathered;
+    }
+
+    public void setInfoGathered(String infoGathered) {
+        this.infoGathered = infoGathered;
+    }
+
+    public List<Team> getOperationTeams() {
+        return operationTeams;
+    }
+
+    public void setOperationTeams(List<Team> operationTeams) {
+        this.operationTeams = operationTeams;
+    }
+
+    @Override
     public String toString(){
         return "Type : " + getOperationType() + "\n" +
                 "Code name : " + getOperationCodeName() + "\n" +

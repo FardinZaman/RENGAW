@@ -1,4 +1,4 @@
-package com.example.RENGAW.entity.enumaration;
+package com.example.RENGAW.entity;
 
 public enum OperationStatus {
     ACTIVE,

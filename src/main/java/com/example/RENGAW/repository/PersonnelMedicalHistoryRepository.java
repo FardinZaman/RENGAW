@@ -11,13 +11,13 @@ import java.util.Optional;
 
 @Repository
 public interface PersonnelMedicalHistoryRepository extends JpaRepository<PersonnelMedicalHistory, Long> {
-    public Optional<PersonnelMedicalHistory> findByPersonnelPersonnelId(Long personnelId);
+    public Optional<PersonnelMedicalHistory> findByPersonnelId(Long personnelId);
 
     @Query(
             value = "SELECT *\n" +
                     "FROM personnel_medical_history pmh\n" +
                     "WHERE pmh.personnel_id IN (\n" +
-                    "    SELECT p.personnel_id\n" +
+                    "    SELECT p.id\n" +
                     "    FROM personnel p\n" +
                     "    WHERE p.first_name = :personnel_name OR p.last_name = :personnel_name\n" +
                     ")",

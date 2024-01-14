@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rengaw")
-public class EquipmentController {
+public class EquipmentRestController {
 
     @Autowired
     private EquipmentService equipmentService;

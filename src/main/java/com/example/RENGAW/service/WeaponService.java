@@ -3,26 +3,70 @@ package com.example.RENGAW.service;
 import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.entity.PersonnelMedicalHistory;
 import com.example.RENGAW.entity.Weapon;
+import com.example.RENGAW.repository.PersonnelRepository;
+import com.example.RENGAW.repository.WeaponRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface WeaponService {
+@Service
+public class WeaponService{
 
-    public Weapon saveWeapon(Weapon weapon);
+    @Autowired
+    WeaponRepository weaponRepository;
 
-    public Weapon assignWeaponToPersonnelByPersonnelId(Long weaponSerialNumber, Long personnelId);
+    @Autowired
+    PersonnelRepository personnelRepository;
 
-    public Weapon assignWeaponToPersonnelByEmailIdAndSaveWeapon(String emailId, Weapon weapon);
+    public Weapon saveWeapon(Weapon weapon) {
+        return weaponRepository.save(weapon);
+    }
 
-    public Personnel findWeaponUserByWeaponSerialNumber(Long weaponSerialNumber);
+    public Weapon assignWeaponToPersonnelByPersonnelId(Long weaponSerialNumber, Long personnelId) {
+        Weapon weapon = weaponRepository.findByWeaponSerialNumber(weaponSerialNumber)
+                .orElseThrow(() -> new EntityNotFoundException("No Weapon Found By Serial Number : " + weaponSerialNumber));
+        Personnel personnel = personnelRepository.findById(personnelId)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Id : " + personnelId));
+        weapon.setPersonnel(personnel);
 
-    public List<Weapon> findWeaponUsedByPersonnelByEmailId(String emailId);
+        return weaponRepository.save(weapon);
+    }
 
-    public List<Weapon> findWeaponUsedByPersonnelByPersonnelId(Long personnelId);
+    public Weapon assignWeaponToPersonnelByEmailIdAndSaveWeapon(String email, Weapon weapon) {
+        Personnel personnel = personnelRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Email : " + email));
+        weapon.setPersonnel(personnel);
 
-    public List<Personnel> findWeaponUserByWeaponProductionCompany(String productionCompany);
+        return weaponRepository.save(weapon);
+    }
 
-    public List<Personnel> findWeaponUserByWeaponBulletCaliber(String diameter, String length);
+    public Personnel findWeaponUserByWeaponSerialNumber(Long weaponSerialNumber) {
+        return weaponRepository.findWeaponUserByWeaponSerialNumber(weaponSerialNumber)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Weapon Serial : " + weaponSerialNumber));
+    }
 
-    public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByGunType(String gunType);
+    public List<Weapon> findWeaponUsedByPersonnelByEmail(String email) {
+        Personnel personnel = personnelRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel Found By Email : " + email));
+
+        return weaponRepository.findByPersonnelId(personnel.getId());
+    }
+
+    public List<Weapon> findWeaponUsedByPersonnelByPersonnelId(Long personnelId) {
+        return weaponRepository.findByPersonnelId(personnelId);
+    }
+
+    public List<Personnel> findWeaponUserByWeaponProductionCompany(String productionCompany) {
+        return weaponRepository.findWeaponUserByWeaponProductionCompany(productionCompany);
+    }
+
+    public List<Personnel> findWeaponUserByWeaponBulletCaliber(String diameter, String length) {
+        return weaponRepository.findWeaponUserByWeaponBulletCaliber(diameter, length);
+    }
+
+    public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByGunType(String gunType) {
+        return weaponRepository.findPersonnelMedicalHistoryByGunType(gunType);
+    }
 }

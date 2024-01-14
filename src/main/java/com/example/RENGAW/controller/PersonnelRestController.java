@@ -2,10 +2,8 @@ package com.example.RENGAW.controller;
 
 import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.service.PersonnelService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/rengaw")
-@Slf4j
-public class PersonnelController {
+public class PersonnelRestController {
 
     @Autowired
     private PersonnelService personnelService;
@@ -48,8 +45,8 @@ public class PersonnelController {
     }
 
     @GetMapping("/findStatus")
-    public String findPersonnelStatusByEmailId(@RequestParam("mail") String emailId){
-        return personnelService.findPersonnelStatusByEmailId(emailId);
+    public String findPersonnelStatusByEmailId(@RequestParam("mail") String email){
+        return personnelService.findPersonnelStatusByEmail(email);
     }
 
     @PutMapping("/changeStatusIfDepressed")
@@ -60,6 +57,6 @@ public class PersonnelController {
     @PutMapping("/addExpertises/{pid}")
     public Personnel addExpertiseToPersonnelByPersonnelId(@RequestBody Map<String, Object> expertiseListMap,
                                                           @PathVariable("pid") Long personnelId){
-        return personnelService.addExpertiseToPersonnelByPersonnelId(expertiseListMap, personnelId);
+        return personnelService.addExpertiseToPersonnel(expertiseListMap, personnelId);
     }
 }

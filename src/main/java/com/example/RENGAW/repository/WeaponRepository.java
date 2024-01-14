@@ -20,7 +20,7 @@ public interface WeaponRepository extends JpaRepository<Weapon, Long> {
     )
     public Optional<Personnel> findWeaponUserByWeaponSerialNumber(@Param("weaponSerialNumber") Long weaponSerialNumber);
 
-    public List<Weapon> findByPersonnelPersonnelId(Long personnelId);
+    public List<Weapon> findByPersonnelId(Long personnelId);
 
     @Query(
             "SELECT w.personnel FROM Weapon w WHERE w.productionCompany LIKE %:productionCompany%"

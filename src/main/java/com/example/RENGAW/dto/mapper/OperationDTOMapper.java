@@ -9,7 +9,7 @@ public class OperationDTOMapper implements Function<Operation, OperationDTO> {
     @Override
     public OperationDTO apply(Operation operation) {
         return new OperationDTO(
-                operation.getOperationId(),
+                operation.getId(),
                 operation.getOperationType(),
                 operation.getOperationCodeName(),
                 operation.getOperationStatus(),

@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rengaw")
-public class ArmouredCarrierController {
+public class ArmouredCarrierRestController {
 
     @Autowired
     private ArmouredCarrierService armouredCarrierService;

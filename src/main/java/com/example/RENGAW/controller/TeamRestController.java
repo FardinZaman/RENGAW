@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rengaw")
-public class TeamController {
+public class TeamRestController {
 
     @Autowired
     private TeamService teamService;

@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rengaw")
-public class OperationController {
+public class OperationRestController {
 
     @Autowired
     private OperationService operationService;
