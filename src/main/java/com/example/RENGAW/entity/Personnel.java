@@ -29,8 +29,7 @@ public class Personnel {
     private Long id;
 
     @OneToOne(
-            mappedBy = "personnel",
-            optional = false
+            mappedBy = "personnel"
     )
     @JsonIgnore
     private PersonnelMedicalHistory personnelMedicalHistory;

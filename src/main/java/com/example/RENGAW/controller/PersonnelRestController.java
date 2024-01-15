@@ -27,6 +27,11 @@ public class PersonnelRestController {
         return personnelService.savePersonnel(personnel);
     }
 
+    @GetMapping("/findPersonnel/{pid}")
+    public Personnel findPersonnelById(@PathVariable("pid") Long personnelId){
+        return personnelService.findPersonnelById(personnelId);
+    }
+
     @GetMapping("/findPersonnel/firstName/{firstName}")
     public List<Personnel> findPersonnelByFirstName(@PathVariable("firstName") String firstName){
         return personnelService.findPersonnelByFirstName(firstName);

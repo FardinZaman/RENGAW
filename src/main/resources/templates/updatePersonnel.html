@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap">
+</head>
+<body style="background-color: #112; color: #fff;">
+<div class="container">
+    <h1>RENGAW</h1>
+    <hr>
+    <h2>Create New Personnel</h2>
+    <form action="#" th:action="@{/rng/p/savePersonnel}" th:object="${personnel}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{email}" placeholder="Email" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{background}" placeholder="Background" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{currentRank}" placeholder="Rank" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{status}" placeholder="Status" class="form-control mb-4 col-4">
+        <input type="number" th:field="*{totalOperation}" placeholder="Total Operation" class="form-control mb-4 col-4">
+        <input type="number" th:field="*{reportedKillCount}" placeholder="Reported Kill" class="form-control mb-4 col-4">
+
+        <input type="text" th:field="*{expertise}" placeholder="Expertise(For example: Ballistic,Technical)" class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2"> Save Personnel </button>
+
+    </form>
+</div>
+</body>
+</html>

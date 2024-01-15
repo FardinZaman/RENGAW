@@ -10,16 +10,17 @@ import jakarta.validation.constraints.Pattern;
 @Entity
 public class ArmouredCarrier {
 
+//    @SequenceGenerator(
+//            name = "armoured_carrier_sequence",
+//            sequenceName = "armoured_carrier_sequence",
+//            allocationSize = 1
+//    )
+//    @GeneratedValue(
+//            strategy = GenerationType.SEQUENCE,
+//            generator = "armoured_carrier_sequence"
+//    )
     @Id
-    @SequenceGenerator(
-            name = "armoured_carrier_sequence",
-            sequenceName = "armoured_carrier_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "armoured_carrier_sequence"
-    )
+    @Column(unique = true)
     private Long carrierSerialNumber;
 
     @NotNull

@@ -27,6 +27,11 @@ public class PersonnelService{
         return personnelRepository.save(personnel);
     }
 
+    public Personnel findPersonnelById(Long personnelId) {
+        return personnelRepository.findById(personnelId)
+                .orElseThrow(() -> new EntityNotFoundException("No personnel found with id " + personnelId));
+    }
+
     public List<Personnel> findPersonnelByFirstName(String firstName) {
         return personnelRepository.findByFirstNameIgnoreCase(firstName);
     }
@@ -66,5 +71,9 @@ public class PersonnelService{
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
         return personnelRepository.findAll(pageable);
+    }
+
+    public void deletePersonnelById(Long personnelId) {
+        personnelRepository.deleteById(personnelId);
     }
 }

@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,5 +45,45 @@ public class PersonnelController {
         model.addAttribute("personnelList", personnelList);
 
         return "allPersonnel";
+    }
+
+    @GetMapping("/newPersonnelForm")
+    public String showNewPersonnelForm(Model model){
+        Personnel personnel = new Personnel();
+        model.addAttribute("personnel", personnel);
+
+        return "newPersonnel";
+    }
+
+    @PostMapping("/savePersonnel")
+    public String savePersonnel(@ModelAttribute("personnel") Personnel personnel){
+        personnelService.savePersonnel(personnel);
+
+        return "redirect:/rng/p/";
+    }
+
+    @GetMapping("/showPersonnel/{pid}")
+    public String showPersonnelDetails(@PathVariable("pid") Long personnelId,
+                                       Model model){
+        Personnel personnel = personnelService.findPersonnelById(personnelId);
+        model.addAttribute("personnel", personnel);
+
+        return "personnelDetails";
+    }
+
+    @GetMapping("updatePersonnelForm/{pid}")
+    public String showUpdatePersonnelForm(@PathVariable("pid") Long personnelId,
+                                          Model model){
+        Personnel personnel = personnelService.findPersonnelById(personnelId);
+        model.addAttribute("personnel", personnel);
+
+        return "updatePersonnel";
+    }
+
+    @GetMapping("/deletePersonnel/{pid}")
+    public String deletePersonnel(@PathVariable("pid") Long personnelId){
+        personnelService.deletePersonnelById(personnelId);
+
+        return "redirect:/rng/p/";
     }
 }

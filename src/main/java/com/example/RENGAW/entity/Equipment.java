@@ -10,16 +10,17 @@ import jakarta.validation.constraints.Size;
 @Entity
 public class Equipment {
 
+//    @SequenceGenerator(
+//            name = "equipment_serial_number_sequence",
+//            sequenceName = "equipment_serial_number_sequence",
+//            allocationSize = 1
+//    )
+//    @GeneratedValue(
+//            strategy = GenerationType.SEQUENCE,
+//            generator = "equipment_serial_number_sequence"
+//    )
     @Id
-    @SequenceGenerator(
-            name = "equipment_serial_number_sequence",
-            sequenceName = "equipment_serial_number_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "equipment_serial_number_sequence"
-    )
+    @Column(unique = true)
     private Long equipmentSerialNumber;
 
     @NotNull

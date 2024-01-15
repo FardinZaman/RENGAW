@@ -10,16 +10,17 @@ import jakarta.validation.constraints.Size;
 @Entity
 public class Weapon {
 
+//    @SequenceGenerator(
+//            name = "weapon_serial_number_sequence",
+//            sequenceName = "weapon_serial_number_sequence",
+//            allocationSize = 1
+//    )
+//    @GeneratedValue(
+//            strategy = GenerationType.SEQUENCE,
+//            generator = "weapon_serial_number_sequence"
+//    )
     @Id
-    @SequenceGenerator(
-            name = "weapon_serial_number_sequence",
-            sequenceName = "weapon_serial_number_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "weapon_serial_number_sequence"
-    )
+    @Column(unique = true)
     private Long weaponSerialNumber;
 
     @NotNull
