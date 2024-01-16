@@ -11,8 +11,9 @@
     <div class="container">
         <h1>RENGAW</h1>
         <hr>
-        <h2>Create New Personnel</h2>
+        <h2>Update Personnel</h2>
         <form action="#" th:action="@{/rng/p/savePersonnel}" th:object="${personnel}" method="post">
+            <input th:if="${formType eq 'u'}" type="hidden" th:field="*{id}">
             <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control mb-4 col-4">
             <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control mb-4 col-4">
             <input type="text" th:field="*{email}" placeholder="Email" class="form-control mb-4 col-4">

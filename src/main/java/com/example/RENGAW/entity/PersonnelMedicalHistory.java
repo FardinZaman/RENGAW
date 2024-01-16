@@ -32,7 +32,7 @@ public class PersonnelMedicalHistory {
     private String lifestyleHabits;
 
     @OneToOne(
-            cascade = CascadeType.ALL,
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH},
             fetch = FetchType.LAZY,
             optional = false
     )

@@ -10,54 +10,54 @@
 <body style="background-color: #112; color: #fff;">
 
 <div class="container my-2">
-    <h1> Personnel List </h1>
-    <a th:href="@{/rng/p/newPersonnelForm}" class="btn btn-primary btn-md mb-3">Add New Personnel</a>
+    <h1> Weapon List </h1>
+    <a th:href="@{/rng/w/newWeaponForm}" class="btn btn-primary btn-md mb-3">Add New Weapon</a>
     <table class="table table-bordered table-striped table-hover">
         <thead>
-            <tr>
-                <th>
-                    <a th:href="@{'/rng/p/page/' + ${currentPage} + '?sortField=firstName&sortDirection=' + ${reverseSortDirection}}">
-                        First Name
-                    </a>
-                </th>
-                <th>
-                    <a th:href="@{'/rng/p/page/' + ${currentPage} + '?sortField=lastName&sortDirection=' + ${reverseSortDirection}}">
-                        Last Name
-                    </a>
-                </th>
-                <th>
-                    <a th:href="@{'/rng/p/page/' + ${currentPage} + '?sortField=email&sortDirection=' + ${reverseSortDirection}}">
-                        Email
-                    </a>
-                </th>
-                <th></th>
-            </tr>
+        <tr>
+            <th>
+                <a th:href="@{'/rng/w/page/' + ${currentPage} + '?sortField=weaponSerialNumber&sortDirection=' + ${reverseSortDirection}}">
+                    Weapon Serial Number
+                </a>
+            </th>
+            <th>
+                <a th:href="@{'/rng/w/page/' + ${currentPage} + '?sortField=gunType&sortDirection=' + ${reverseSortDirection}}">
+                    Gun Type
+                </a>
+            </th>
+            <th>
+                <a th:href="@{'/rng/w/page/' + ${currentPage} + '?sortField=gunModel&sortDirection=' + ${reverseSortDirection}}">
+                    Gun Model
+                </a>
+            </th>
+            <th></th>
+        </tr>
         </thead>
 
         <tbody>
-            <tr th:each="personnel : ${personnelList}">
-                <td th:text="${personnel.firstName}"></td>
-                <td th:text="${personnel.lastName}"></td>
-                <td th:text="${personnel.email}"></td>
-                <td>
-                    <a th:href=@{/rng/p/showPersonnel/{pid}(pid=${personnel.id})} class="btn btn-primary btn-block">
-                        View Details
-                    </a>
-                </td>
-            </tr>
+        <tr th:each="weapon : ${weaponList}">
+            <td th:text="${weapon.weaponSerialNumber}"></td>
+            <td th:text="${weapon.gunType}"></td>
+            <td th:text="${weapon.gunModel}"></td>
+            <td>
+                <a th:href=@{/rng/w/showWeapon/{wsn}(wsn=${weapon.weaponSerialNumber})} class="btn btn-primary btn-block">
+                    View Details
+                </a>
+            </td>
+        </tr>
         </tbody>
     </table>
 
     <div th:if="${totalPages > 1}">
         <div class="row col-sm-10">
             <div class="col-sm-4">
-                Total Personnel : [[${totalItems}]]
+                Total Weapons : [[${totalItems}]]
             </div>
             <div class="col-sm-5">
-                <div>
+                <div class="btn-group">
                     <span th:each="i : ${#numbers.sequence(1, totalPages)}">
                         <a th:if="${currentPage != i}"
-                           th:href="@{'/rng/p/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}"
+                           th:href="@{'/rng/w/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}"
                            class="btn btn-outline-secondary">
                             [[${i}]]
                         </a>
@@ -70,7 +70,7 @@
             </div>
             <div class="col-sm-1">
                 <a th:if="${currentPage < totalPages}"
-                   th:href="@{'/rng/p/page/' + ${currentPage+1} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}"
+                   th:href="@{'/rng/w/page/' + ${currentPage+1} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}"
                    class="btn btn-outline-secondary">
                     Next
                 </a>
@@ -80,7 +80,7 @@
             </div>
             <div class="col-sm-1">
                 <a th:if="${currentPage < totalPages}"
-                   th:href="@{'/rng/p/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}"
+                   th:href="@{'/rng/w/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}"
                    class="btn btn-outline-secondary">
                     Last
                 </a>

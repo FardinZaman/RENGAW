@@ -70,7 +70,9 @@
             </ul>
 
             <div class="btn-container btn-group-vertical">
-                <a class="btn btn-secondary btn-lg" style="border-radius: 12px">Button 1</a>
+                <a class="btn btn-info btn-lg" style="border-radius: 12px" th:href="@{/rng/pmh/medicalHistory/{pid}(pid=${personnel.id})}">
+                    Medical History
+                </a>
                 <br><br>
                 <a class="btn btn-info btn-lg" style="border-radius: 12px" th:href="@{/rng/p/updatePersonnelForm/{id}(id=${personnel.id})}">
                     Update Personnel

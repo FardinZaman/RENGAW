@@ -60,4 +60,17 @@ public class PersonnelMedicalHistoryService{
     public List<PersonnelMedicalHistory> showMedicalHistoryByEquipmentMaterialAndCaliberAndName(String materialsUsed, String caliber, String personnelName) {
         return personnelMedicalHistoryRepository.findMedicalHistoryByEquipmentMaterialAndCaliberAndName(materialsUsed, caliber, personnelName);
     }
+
+    public PersonnelMedicalHistory findMedicalHistoryByPersonnelId(Long personnelId) {
+        return personnelMedicalHistoryRepository.findByPersonnelId(personnelId).orElse(null);
+    }
+
+    public PersonnelMedicalHistory findMedicalHistoryById(Long personnelMedicalHistoryId) {
+        return personnelMedicalHistoryRepository.findById(personnelMedicalHistoryId)
+                .orElseThrow(() -> new EntityNotFoundException("No Medical History found with " + personnelMedicalHistoryId));
+    }
+
+    public void deleteMedicalHistory(Long personnelMedicalHistoryId) {
+        personnelMedicalHistoryRepository.deleteById(personnelMedicalHistoryId);
+    }
 }

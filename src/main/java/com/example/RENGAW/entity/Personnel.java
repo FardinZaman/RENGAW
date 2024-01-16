@@ -29,7 +29,8 @@ public class Personnel {
     private Long id;
 
     @OneToOne(
-            mappedBy = "personnel"
+            mappedBy = "personnel",
+            cascade = CascadeType.ALL
     )
     @JsonIgnore
     private PersonnelMedicalHistory personnelMedicalHistory;

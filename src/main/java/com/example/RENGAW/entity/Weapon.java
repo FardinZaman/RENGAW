@@ -2,10 +2,7 @@ package com.example.RENGAW.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Weapon {
@@ -21,6 +18,8 @@ public class Weapon {
 //    )
     @Id
     @Column(unique = true)
+    @NotNull
+    @Positive
     private Long weaponSerialNumber;
 
     @NotNull
@@ -43,9 +42,14 @@ public class Weapon {
     @Pattern(regexp = "^\\d{4}$")
     private String productionYear;
 
-    private String sandTestStatus;
-    private String mudTestStatus;
-    private String iceTestStatus;
+    @Enumerated(EnumType.STRING)
+    private GunTestStatus sandTestStatus;
+
+    @Enumerated(EnumType.STRING)
+    private GunTestStatus mudTestStatus;
+
+    @Enumerated(EnumType.STRING)
+    private GunTestStatus iceTestStatus;
 
     @ManyToOne(
             cascade = CascadeType.ALL,
@@ -109,27 +113,27 @@ public class Weapon {
         this.productionYear = productionYear;
     }
 
-    public String getSandTestStatus() {
+    public GunTestStatus getSandTestStatus() {
         return sandTestStatus;
     }
 
-    public void setSandTestStatus(String sandTestStatus) {
+    public void setSandTestStatus(GunTestStatus sandTestStatus) {
         this.sandTestStatus = sandTestStatus;
     }
 
-    public String getMudTestStatus() {
+    public GunTestStatus getMudTestStatus() {
         return mudTestStatus;
     }
 
-    public void setMudTestStatus(String mudTestStatus) {
+    public void setMudTestStatus(GunTestStatus mudTestStatus) {
         this.mudTestStatus = mudTestStatus;
     }
 
-    public String getIceTestStatus() {
+    public GunTestStatus getIceTestStatus() {
         return iceTestStatus;
     }
 
-    public void setIceTestStatus(String iceTestStatus) {
+    public void setIceTestStatus(GunTestStatus iceTestStatus) {
         this.iceTestStatus = iceTestStatus;
     }
 

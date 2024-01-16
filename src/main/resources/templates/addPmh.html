@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap">
+</head>
+<body style="background-color: #112; color: #fff;">
+
+<div class="text-start text-danger fs-1">
+    No Medical History Found
+</div>
+
+<div>
+    <a class="btn btn-lg btn-success" th:href="@{/rng/pmh/medicalHistoryForm/{pid}(pid=${personnelId})}">Add Medical History</a>
+</div>
+<br><br>
+<div>
+    <a class="btn btn-primary btn-lg btn-back" th:href="@{/rng/p/showPersonnel/{pid}(pid=${personnelId})}">Back to Personnel</a>
+</div>
+
+</body>
+</html>

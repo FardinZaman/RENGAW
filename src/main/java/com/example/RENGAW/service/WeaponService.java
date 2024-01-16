@@ -7,6 +7,10 @@ import com.example.RENGAW.repository.PersonnelRepository;
 import com.example.RENGAW.repository.WeaponRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -68,5 +72,16 @@ public class WeaponService{
 
     public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByGunType(String gunType) {
         return weaponRepository.findPersonnelMedicalHistoryByGunType(gunType);
+    }
+
+    public Page<Weapon> findAllWeaponPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        return weaponRepository.findAll(pageable);
+    }
+
+    public Weapon findWeaponBySerialNumber(Long weaponSerialNumber) {
+        return weaponRepository.findByWeaponSerialNumber(weaponSerialNumber)
+                .orElseThrow(() -> new EntityNotFoundException("No Weapon found with Serial " + weaponSerialNumber));
     }
 }

@@ -51,8 +51,9 @@ public class PersonnelController {
     public String showNewPersonnelForm(Model model){
         Personnel personnel = new Personnel();
         model.addAttribute("personnel", personnel);
+        model.addAttribute("formType", "n");
 
-        return "newPersonnel";
+        return "personnelForm";
     }
 
     @PostMapping("/savePersonnel")
@@ -76,8 +77,9 @@ public class PersonnelController {
                                           Model model){
         Personnel personnel = personnelService.findPersonnelById(personnelId);
         model.addAttribute("personnel", personnel);
+        model.addAttribute("formType", "u");
 
-        return "updatePersonnel";
+        return "personnelForm";
     }
 
     @GetMapping("/deletePersonnel/{pid}")

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap">
+    <style>
+        body {
+            font-family: 'Montserrat';
+        }
+        .card {
+            margin: 0 auto;
+            background-color: #112;
+            color: #fff;
+            border: none;
+        }
+        .card-header {
+            background-color: #112;
+            color: #fff;
+            text-align: center;
+            font-size: 30px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+
+        .btn-container {
+            position: absolute;
+            top: 150px;
+            right: 200px;
+        }
+
+        .btn-back {
+            margin-top: 20px;
+            display: block;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body style="background-color: #112; color: #fff;">
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            Weapon Details
+        </div>
+        <div class="card-body">
+            <p><strong>Weapon Serial Number:</strong> <span th:text="${weapon.weaponSerialNumber}"></span></p>
+            <p><strong>Gun Type:</strong> <span th:text="${weapon.gunType}"></span></p>
+            <p><strong>Gun Model:</strong> <span th:text="${weapon.gunModel}"></span></p>
+            <p><strong>Bullet Caliber:</strong> <span th:text="${weapon.bulletCaliber}"></span></p>
+            <p><strong>Production Company:</strong> <span th:text="${weapon.productionCompany}"></span></p>
+            <p><strong>Production Year:</strong> <span th:text="${weapon.productionYear}"></span></p>
+            <p><strong>Sand Test Status:</strong> <span th:text="${weapon.sandTestStatus}"></span></p>
+            <p><strong>Mud Test Status:</strong> <span th:text="${weapon.mudTestStatus}"></span></p>
+            <p><strong>Ice Test Status:</strong> <span th:text="${weapon.iceTestStatus}"></span></p>
+
+            <div class="btn-container btn-group-vertical">
+<!--                <a class="btn btn-info btn-lg" style="border-radius: 12px" th:href="@{/rng/pmh/medicalHistory/{pid}(pid=${weapon.id})}">-->
+<!--                    Medical History-->
+<!--                </a>-->
+<!--                <br><br>-->
+                <a class="btn btn-info btn-lg" style="border-radius: 12px" th:href="@{/rng/w/updateWeaponForm/{wsn}(wsn=${weapon.weaponSerialNumber})}">
+                    Update weapon
+                </a>
+                <br><br>
+                <a class="btn btn-danger btn-lg" style="border-radius: 12px" th:href="@{/rng/w/deleteWeapon/{wsn}(wsn=${weapon.weaponSerialNumber})}">
+                    Delete weapon
+                </a>
+            </div>
+
+            <a th:href="@{/rng/w/}" class="btn btn-primary btn-back">Back to List</a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
