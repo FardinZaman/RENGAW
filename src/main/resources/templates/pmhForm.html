@@ -22,7 +22,16 @@
         <input type="text" th:field="*{allergies}" placeholder="Allergies" class="form-control mb-4 col-4">
         <input type="text" th:field="*{hazardousExposure}" placeholder="Hazardous Exposure" class="form-control mb-4 col-4">
         <input type="text" th:field="*{immunizations}" placeholder="Immunizations" class="form-control mb-4 col-4">
-        <input type="text" th:field="*{stressLevels}" placeholder="Stress Levels" class="form-control mb-4 col-4">
+
+        <select th:field="*{stressLevels}" class="form-control mb-4 col-4">
+            <option value="HIGH">HIGH</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="LOW">LOW</option>
+            <option value="ZERO">ZERO</option>
+            <option value="ALARMING">ALARMING</option>
+            <option value="CLASSIFIED">CLASSIFIED</option>
+        </select>
+
         <input type="text" th:field="*{mentalHealth}" placeholder="Mental Health" class="form-control mb-4 col-4">
         <input type="text" th:field="*{lifestyleHabits}" placeholder="Lifestyle Habits" class="form-control mb-4 col-4">
 

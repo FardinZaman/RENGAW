@@ -84,4 +84,8 @@ public class WeaponService{
         return weaponRepository.findByWeaponSerialNumber(weaponSerialNumber)
                 .orElseThrow(() -> new EntityNotFoundException("No Weapon found with Serial " + weaponSerialNumber));
     }
+
+    public void deleteWeaponBySerialNumber(Long weaponSerialNumber) {
+        weaponRepository.deleteByWeaponSerialNumber(weaponSerialNumber);
+    }
 }

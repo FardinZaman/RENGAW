@@ -20,9 +20,27 @@
         <input type="text" th:field="*{bulletCaliber}" placeholder="Bullet Caliber" class="form-control mb-4 col-4">
         <input type="text" th:field="*{productionCompany}" placeholder="Production Company" class="form-control mb-4 col-4">
         <input type="text" th:field="*{productionYear}" placeholder="Production Year" class="form-control mb-4 col-4">
-        <input type="text" th:field="*{sandTestStatus}" placeholder="Sand Test Status" class="form-control mb-4 col-4">
-        <input type="text" th:field="*{mudTestStatus}" placeholder="Mud Test Status" class="form-control mb-4 col-4">
-        <input type="text" th:field="*{iceTestStatus}" placeholder="Ice Test Status" class="form-control mb-4 col-4">
+
+        <select th:field="*{sandTestStatus}" class="form-control mb-4 col-4">
+            <option value="PASSED">PASSED</option>
+            <option value="NOT_TESTED">NOT_TESTED</option>
+            <option value="JAMMED">JAMMED</option>
+            <option value="MALFUNCTIONED">MALFUNCTIONED</option>
+        </select>
+
+        <select th:field="*{mudTestStatus}" class="form-control mb-4 col-4">
+            <option value="PASSED">PASSED</option>
+            <option value="NOT_TESTED">NOT_TESTED</option>
+            <option value="JAMMED">JAMMED</option>
+            <option value="MALFUNCTIONED">MALFUNCTIONED</option>
+        </select>
+
+        <select th:field="*{iceTestStatus}" class="form-control mb-4 col-4">
+            <option value="PASSED">PASSED</option>
+            <option value="NOT_TESTED">NOT_TESTED</option>
+            <option value="JAMMED">JAMMED</option>
+            <option value="MALFUNCTIONED">MALFUNCTIONED</option>
+        </select>
 
         <button type="submit" class="btn btn-info col-2"> Save Weapon </button>
 

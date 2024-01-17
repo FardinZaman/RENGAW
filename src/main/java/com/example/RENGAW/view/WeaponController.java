@@ -81,4 +81,11 @@ public class WeaponController {
 
         return "weaponForm";
     }
+
+    @GetMapping("/deleteWeapon/{wsn}")
+    public String deletePersonnel(@PathVariable("wsn") Long weaponSerialNumber){
+        weaponService.deleteWeaponBySerialNumber(weaponSerialNumber);
+
+        return "redirect:/rng/w/";
+    }
 }

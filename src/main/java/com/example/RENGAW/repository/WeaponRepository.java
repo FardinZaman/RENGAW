@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,4 +39,7 @@ public interface WeaponRepository extends JpaRepository<Weapon, Long> {
                     "WHERE w.gunType LIKE %:gunType%"
     )
     public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByGunType(@Param("gunType") String gunType);
+
+    @Transactional
+    void deleteByWeaponSerialNumber(Long weaponSerialNumber);
 }
