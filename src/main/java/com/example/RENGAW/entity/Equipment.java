@@ -53,12 +53,8 @@ public class Equipment {
     private String description;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH},
             fetch = FetchType.LAZY
-    )
-    @JoinColumn(
-            name = "personnel_id",
-            referencedColumnName = "id"
     )
     @JsonIgnore
     private Personnel personnel;

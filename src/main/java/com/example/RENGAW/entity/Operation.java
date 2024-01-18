@@ -30,6 +30,7 @@ public class Operation {
 
     @NotNull
     @NotBlank
+    @Column(unique = true)
     private String operationCodeName;
 
     @Enumerated(EnumType.STRING)
@@ -55,21 +56,10 @@ public class Operation {
     private String infoGathered;
 
     @ManyToMany(
-            cascade = CascadeType.ALL
-    )
-    @JoinTable(
-            name = "team_operation_mapping",
-            joinColumns = @JoinColumn(
-                    name = "operation_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "team_id",
-                    referencedColumnName = "id"
-            )
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH}
     )
     @JsonIgnore
-    private List<Team> operationTeams;
+    private List<Team> team;
 
     public Operation() {
     }
@@ -154,12 +144,12 @@ public class Operation {
         this.infoGathered = infoGathered;
     }
 
-    public List<Team> getOperationTeams() {
-        return operationTeams;
+    public List<Team> getTeam() {
+        return team;
     }
 
-    public void setOperationTeams(List<Team> operationTeams) {
-        this.operationTeams = operationTeams;
+    public void setTeam(List<Team> team) {
+        this.team = team;
     }
 
     @Override

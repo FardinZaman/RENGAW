@@ -13,11 +13,14 @@ import java.util.List;
 @Service
 public class EquipmentService{
 
-    @Autowired
-    private EquipmentRepository equipmentRepository;
+    private final EquipmentRepository equipmentRepository;
+    private final PersonnelRepository personnelRepository;
 
     @Autowired
-    private PersonnelRepository personnelRepository;
+    public EquipmentService(EquipmentRepository equipmentRepository, PersonnelRepository personnelRepository) {
+        this.equipmentRepository = equipmentRepository;
+        this.personnelRepository = personnelRepository;
+    }
 
     public Equipment saveEquipment(Equipment equipment) {
         return equipmentRepository.save(equipment);

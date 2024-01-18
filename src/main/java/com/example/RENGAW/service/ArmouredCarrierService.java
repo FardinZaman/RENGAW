@@ -12,11 +12,14 @@ import java.util.List;
 @Service
 public class ArmouredCarrierService{
 
-    @Autowired
-    private ArmouredCarrierRepository armouredCarrierRepository;
+    private final ArmouredCarrierRepository armouredCarrierRepository;
+    private final TeamRepository teamRepository;
 
     @Autowired
-    private TeamRepository teamRepository;
+    public ArmouredCarrierService(ArmouredCarrierRepository armouredCarrierRepository, TeamRepository teamRepository) {
+        this.armouredCarrierRepository = armouredCarrierRepository;
+        this.teamRepository = teamRepository;
+    }
 
     public ArmouredCarrier assignCarrierToTeamAndSave(Long teamId, ArmouredCarrier armouredCarrier) {
         armouredCarrier.setTeam(teamRepository.findById(teamId)

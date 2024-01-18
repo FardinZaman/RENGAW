@@ -17,11 +17,14 @@ import java.util.Optional;
 @Service
 public class PersonnelService{
 
-    @Autowired
-    private PersonnelRepository personnelRepository;
+    private final PersonnelRepository personnelRepository;
+    private final TeamService teamService;
 
     @Autowired
-    private TeamService teamService;
+    public PersonnelService(PersonnelRepository personnelRepository, TeamService teamService) {
+        this.personnelRepository = personnelRepository;
+        this.teamService = teamService;
+    }
 
     public Personnel savePersonnel(Personnel personnel) {
         return personnelRepository.save(personnel);
@@ -75,5 +78,9 @@ public class PersonnelService{
 
     public void deletePersonnelById(Long personnelId) {
         personnelRepository.deleteById(personnelId);
+    }
+
+    public List<Personnel> findAllPersonnel() {
+        return personnelRepository.findAll();
     }
 }

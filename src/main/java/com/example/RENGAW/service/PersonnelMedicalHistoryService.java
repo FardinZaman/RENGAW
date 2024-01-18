@@ -15,11 +15,14 @@ import java.util.List;
 @Slf4j
 public class PersonnelMedicalHistoryService{
 
-    @Autowired
-    private PersonnelMedicalHistoryRepository personnelMedicalHistoryRepository;
+    private final PersonnelMedicalHistoryRepository personnelMedicalHistoryRepository;
+    private final PersonnelRepository personnelRepository;
 
     @Autowired
-    private PersonnelRepository personnelRepository;
+    public PersonnelMedicalHistoryService(PersonnelMedicalHistoryRepository personnelMedicalHistoryRepository, PersonnelRepository personnelRepository) {
+        this.personnelMedicalHistoryRepository = personnelMedicalHistoryRepository;
+        this.personnelRepository = personnelRepository;
+    }
 
     public PersonnelMedicalHistory savePersonnelMedicalHistory(PersonnelMedicalHistory personnelMedicalHistory, Long personnelId) {
         Personnel personnel = personnelRepository.findById(personnelId)

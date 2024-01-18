@@ -21,14 +21,16 @@ import java.util.Objects;
 @Slf4j
 public class TeamService{
 
-    @Autowired
-    private TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
+    private final PersonnelRepository personnelRepository;
+    private final EquipmentRepository equipmentRepository;
 
     @Autowired
-    private PersonnelRepository personnelRepository;
-
-    @Autowired
-    private EquipmentRepository equipmentRepository;
+    public TeamService(TeamRepository teamRepository, PersonnelRepository personnelRepository, EquipmentRepository equipmentRepository) {
+        this.teamRepository = teamRepository;
+        this.personnelRepository = personnelRepository;
+        this.equipmentRepository = equipmentRepository;
+    }
 
     public boolean isReady(Team team){
         return team.isHasBallisticExpert() && team.isHasExplosiveExpert() && team.isHasTechnologyExpert() &&

@@ -12,23 +12,27 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class WeaponService{
 
-    @Autowired
-    WeaponRepository weaponRepository;
+    private final WeaponRepository weaponRepository;
+    private final PersonnelRepository personnelRepository;
 
     @Autowired
-    PersonnelRepository personnelRepository;
+    public WeaponService(WeaponRepository weaponRepository, PersonnelRepository personnelRepository) {
+        this.weaponRepository = weaponRepository;
+        this.personnelRepository = personnelRepository;
+    }
 
     public Weapon saveWeapon(Weapon weapon) {
         return weaponRepository.save(weapon);
     }
 
-    public Weapon assignWeaponToPersonnelByPersonnelId(Long weaponSerialNumber, Long personnelId) {
+    public Weapon assignWeaponToPersonnel(Long weaponSerialNumber, Long personnelId) {
         Weapon weapon = weaponRepository.findByWeaponSerialNumber(weaponSerialNumber)
                 .orElseThrow(() -> new EntityNotFoundException("No Weapon Found By Serial Number : " + weaponSerialNumber));
         Personnel personnel = personnelRepository.findById(personnelId)
@@ -58,7 +62,7 @@ public class WeaponService{
         return weaponRepository.findByPersonnelId(personnel.getId());
     }
 
-    public List<Weapon> findWeaponUsedByPersonnelByPersonnelId(Long personnelId) {
+    public List<Weapon> findWeaponOfPersonnel(Long personnelId) {
         return weaponRepository.findByPersonnelId(personnelId);
     }
 
@@ -87,5 +91,13 @@ public class WeaponService{
 
     public void deleteWeaponBySerialNumber(Long weaponSerialNumber) {
         weaponRepository.deleteByWeaponSerialNumber(weaponSerialNumber);
+    }
+
+    @Transactional
+    public void removePersonnel(Long weaponSerialNumber) {
+        Weapon weapon = weaponRepository.findByWeaponSerialNumber(weaponSerialNumber)
+                .orElseThrow(() -> new EntityNotFoundException("No weapon found with Serial : " + weaponSerialNumber));
+        weapon.setPersonnel(null);
+        weaponRepository.save(weapon);
     }
 }

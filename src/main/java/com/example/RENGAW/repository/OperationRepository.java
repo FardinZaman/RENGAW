@@ -17,14 +17,14 @@ public interface OperationRepository extends JpaRepository<Operation, Long> {
 
     @Query(
             "SELECT o FROM Operation o " +
-                    "JOIN o.operationTeams t " +
+                    "JOIN o.team t " +
                     "WHERE t.teamCodeName LIKE :teamCodeName"
     )
     public List<Operation> findByTeamCodeName(@Param("teamCodeName") String teamCodeName);
 
     @Query(
             "SELECT t FROM Operation o" +
-                    " JOIN o.operationTeams t" +
+                    " JOIN o.team t" +
                     " WHERE o.operationCodeName LIKE :operationCodeName"
     )
     public List<Team> findTeamByOperationCodeName(@Param("operationCodeName") String operationCodeName);

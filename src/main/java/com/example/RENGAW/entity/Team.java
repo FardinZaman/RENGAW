@@ -10,12 +10,6 @@ import org.hibernate.validator.constraints.Range;
 import java.util.List;
 
 @Entity
-@Table(
-        uniqueConstraints = @UniqueConstraint(
-                name = "teamCodeName_unique",
-                columnNames = "team_code_name"
-        )
-)
 public class Team {
 
     @Id
@@ -30,6 +24,7 @@ public class Team {
     )
     private Long id;
 
+    @Column(unique = true)
     private String teamCodeName;
 
     @NotNull
@@ -37,7 +32,7 @@ public class Team {
     private String currentLead;
 
     @NotNull
-    @Digits(integer = 1000, fraction = 0)
+    @Digits(integer = 4, fraction = 0)
     private Long currentLeadId;
 
     @NotNull

@@ -50,12 +50,8 @@ public class ArmouredCarrier {
     private double weightInTonne;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH},
             fetch = FetchType.LAZY
-    )
-    @JoinColumn(
-            name = "team_id",
-            referencedColumnName = "id"
     )
     @JsonIgnore
     private Team team;

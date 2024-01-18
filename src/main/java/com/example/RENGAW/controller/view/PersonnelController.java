@@ -1,4 +1,4 @@
-package com.example.RENGAW.view;
+package com.example.RENGAW.controller.view;
 
 import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.service.PersonnelService;
@@ -14,8 +14,12 @@ import java.util.List;
 @RequestMapping("/rng/p")
 public class PersonnelController {
 
+    private final PersonnelService personnelService;
+
     @Autowired
-    private PersonnelService personnelService;
+    public PersonnelController(PersonnelService personnelService) {
+        this.personnelService = personnelService;
+    }
 
     @GetMapping("/")
     public String findAllPersonnel(Model model){
@@ -23,9 +27,9 @@ public class PersonnelController {
     }
 
     @GetMapping("/page/{pageNo}")
-    private String findAllPersonnelPaginated(@PathVariable("pageNo") int pageNo,
-                                             @RequestParam("sortField") String sortField,
-                                             @RequestParam("sortDirection") String sortDirection,
+    private String findAllPersonnelPaginated(@PathVariable int pageNo,
+                                             @RequestParam String sortField,
+                                             @RequestParam String sortDirection,
                                              Model model) {
 
         int pageSize = 4;
@@ -57,14 +61,14 @@ public class PersonnelController {
     }
 
     @PostMapping("/savePersonnel")
-    public String savePersonnel(@ModelAttribute("personnel") Personnel personnel){
+    public String savePersonnel(@ModelAttribute Personnel personnel){
         personnelService.savePersonnel(personnel);
 
         return "redirect:/rng/p/";
     }
 
-    @GetMapping("/showPersonnel/{pid}")
-    public String showPersonnelDetails(@PathVariable("pid") Long personnelId,
+    @GetMapping("/showPersonnel/{personnelId}")
+    public String showPersonnelDetails(@PathVariable Long personnelId,
                                        Model model){
         Personnel personnel = personnelService.findPersonnelById(personnelId);
         model.addAttribute("personnel", personnel);
@@ -72,8 +76,8 @@ public class PersonnelController {
         return "personnelDetails";
     }
 
-    @GetMapping("updatePersonnelForm/{pid}")
-    public String showUpdatePersonnelForm(@PathVariable("pid") Long personnelId,
+    @GetMapping("updatePersonnelForm/{personnelId}")
+    public String showUpdatePersonnelForm(@PathVariable Long personnelId,
                                           Model model){
         Personnel personnel = personnelService.findPersonnelById(personnelId);
         model.addAttribute("personnel", personnel);
@@ -82,8 +86,8 @@ public class PersonnelController {
         return "personnelForm";
     }
 
-    @GetMapping("/deletePersonnel/{pid}")
-    public String deletePersonnel(@PathVariable("pid") Long personnelId){
+    @GetMapping("/deletePersonnel/{personnelId}")
+    public String deletePersonnel(@PathVariable Long personnelId){
         personnelService.deletePersonnelById(personnelId);
 
         return "redirect:/rng/p/";

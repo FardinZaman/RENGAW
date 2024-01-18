@@ -70,20 +70,24 @@
             </ul>
 
             <div class="btn-container btn-group-vertical">
+                <a class="btn btn-info btn-lg" style="border-radius: 12px" th:href="@{/rng/w/weaponOfPersonnel/{pid}(pid=${personnel.id})}">
+                    Weapon
+                </a>
+                <br>
                 <a class="btn btn-info btn-lg" style="border-radius: 12px" th:href="@{/rng/pmh/medicalHistory/{pid}(pid=${personnel.id})}">
                     Medical History
                 </a>
-                <br><br>
+                <br>
                 <a class="btn btn-info btn-lg" style="border-radius: 12px" th:href="@{/rng/p/updatePersonnelForm/{id}(id=${personnel.id})}">
                     Update Personnel
                 </a>
-                <br><br>
+                <br>
                 <a class="btn btn-danger btn-lg" style="border-radius: 12px" th:href="@{/rng/p/deletePersonnel/{id}(id=${personnel.id})}">
                     Delete Personnel
                 </a>
             </div>
 
-            <a th:href="@{/rng/p/}" class="btn btn-primary btn-back">Back to List</a>
+            <a th:href="@{/rng/p/}" class="btn btn-primary btn-back">Show All Personnel</a>
         </div>
     </div>
 

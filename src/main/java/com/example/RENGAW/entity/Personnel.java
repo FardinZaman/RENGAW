@@ -8,12 +8,6 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(
-        uniqueConstraints = @UniqueConstraint(
-                name = "emailId_unique",
-                columnNames = "email_address"
-        )
-)
 public class Personnel {
 
     @Id
@@ -40,7 +34,8 @@ public class Personnel {
 
     @Column(
             name = "email_address",
-            nullable = false
+            nullable = false,
+            unique = true
     )
     @Email
     private String email;
@@ -60,12 +55,8 @@ public class Personnel {
     private List<String> expertise;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH},
             fetch = FetchType.LAZY
-    )
-    @JoinColumn(
-            name = "team_id",
-            referencedColumnName = "id"
     )
     @JsonIgnore
     private Team team;

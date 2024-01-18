@@ -52,12 +52,8 @@ public class Weapon {
     private GunTestStatus iceTestStatus;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH},
             fetch = FetchType.LAZY
-    )
-    @JoinColumn(
-            name = "personnel_id",
-            referencedColumnName = "id"
     )
     @JsonIgnore
     private Personnel personnel;

@@ -1,4 +1,4 @@
-package com.example.RENGAW.controller;
+package com.example.RENGAW.controller.rest;
 
 import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.entity.PersonnelMedicalHistory;
@@ -31,7 +31,7 @@ public class WeaponRestController {
     @PutMapping("/assignWeapon")
     public Weapon assignWeaponToPersonnelByPersonnelId(@RequestParam("wsn") Long weaponSerialNumber,
                                                        @RequestParam("pid") Long personnelId){
-        return weaponService.assignWeaponToPersonnelByPersonnelId(weaponSerialNumber, personnelId);
+        return weaponService.assignWeaponToPersonnel(weaponSerialNumber, personnelId);
     }
 
     @PostMapping("/assignAndSaveWeapon")
@@ -57,7 +57,7 @@ public class WeaponRestController {
 
     @GetMapping("/showUsersWeaponById")
     public List<Weapon> findWeaponUsedByPersonnelByPersonnelId(@RequestParam("pid") Long personnelId){
-        return weaponService.findWeaponUsedByPersonnelByPersonnelId(personnelId);
+        return weaponService.findWeaponOfPersonnel(personnelId);
     }
 
     @GetMapping("/showUsersOfCompany")

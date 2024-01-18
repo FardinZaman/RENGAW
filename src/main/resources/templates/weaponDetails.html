@@ -57,21 +57,43 @@
             <p><strong>Mud Test Status:</strong> <span th:text="${weapon.mudTestStatus}"></span></p>
             <p><strong>Ice Test Status:</strong> <span th:text="${weapon.iceTestStatus}"></span></p>
 
+            <div th:if="${weapon.personnel != null}">
+                <p>
+                    <strong>Assigned Personnel:</strong>
+                    <a th:href="@{/rng/p/showPersonnel/{pid}(pid=${weapon.personnel.id})}">
+                        <span style="font-size: 20px; color: yellow;"
+                              th:text="${weapon.personnel.currentRank + ' ' + weapon.personnel.firstName + ' ' +weapon.personnel.lastName}">
+                        </span>
+                    </a>
+                    &nbsp;
+                    <span>
+                        <a class="btn btn-danger btn-md" style="border-radius: 12px" th:href="@{/rng/w/removePersonnel/{wsn}(wsn=${weapon.weaponSerialNumber})}">
+                            Un-assign
+                        </a>
+                    </span>
+                </p>
+            </div>
+
             <div class="btn-container btn-group-vertical">
 <!--                <a class="btn btn-info btn-lg" style="border-radius: 12px" th:href="@{/rng/pmh/medicalHistory/{pid}(pid=${weapon.id})}">-->
 <!--                    Medical History-->
 <!--                </a>-->
-<!--                <br><br>-->
+                <div th:if="${weapon.personnel == null}">
+                    <a class="btn btn-success btn-lg" style="border-radius: 12px" th:href="@{/rng/w/assignWeapon/{wsn}(wsn=${weapon.weaponSerialNumber})}">
+                        Assign To Personnel
+                    </a>
+                </div>
+                <br>
                 <a class="btn btn-info btn-lg" style="border-radius: 12px" th:href="@{/rng/w/updateWeaponForm/{wsn}(wsn=${weapon.weaponSerialNumber})}">
                     Update weapon
                 </a>
-                <br><br>
+                <br>
                 <a class="btn btn-danger btn-lg" style="border-radius: 12px" th:href="@{/rng/w/deleteWeapon/{wsn}(wsn=${weapon.weaponSerialNumber})}">
                     Delete weapon
                 </a>
             </div>
 
-            <a th:href="@{/rng/w/}" class="btn btn-primary btn-back">Back to List</a>
+            <a th:href="@{/rng/w/}" class="btn btn-primary btn-back">Show All Weapon</a>
         </div>
     </div>
 

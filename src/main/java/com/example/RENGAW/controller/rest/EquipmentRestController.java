@@ -1,4 +1,4 @@
-package com.example.RENGAW.controller;
+package com.example.RENGAW.controller.rest;
 
 import com.example.RENGAW.entity.Equipment;
 import com.example.RENGAW.service.EquipmentService;

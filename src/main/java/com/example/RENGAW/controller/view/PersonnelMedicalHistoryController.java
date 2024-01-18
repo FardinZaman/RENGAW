@@ -1,4 +1,4 @@
-package com.example.RENGAW.view;
+package com.example.RENGAW.controller.view;
 
 import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.entity.PersonnelMedicalHistory;
@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/rng/pmh")
 public class PersonnelMedicalHistoryController {
 
-    @Autowired
-    private PersonnelMedicalHistoryService personnelMedicalHistoryService;
+    private final PersonnelMedicalHistoryService personnelMedicalHistoryService;
+    private final PersonnelService personnelService;
 
     @Autowired
-    private PersonnelService personnelService;
+    public PersonnelMedicalHistoryController(PersonnelMedicalHistoryService personnelMedicalHistoryService, PersonnelService personnelService) {
+        this.personnelMedicalHistoryService = personnelMedicalHistoryService;
+        this.personnelService = personnelService;
+    }
 
-    @GetMapping("/medicalHistory/{pid}")
-    public String showMedicalHistory(@PathVariable("pid") Long personnelId,
+    @GetMapping("/medicalHistory/{personnelId}")
+    public String showMedicalHistory(@PathVariable Long personnelId,
                                      Model model){
         PersonnelMedicalHistory personnelMedicalHistory =
                 personnelMedicalHistoryService.findMedicalHistoryByPersonnelId(personnelId);
@@ -36,8 +39,8 @@ public class PersonnelMedicalHistoryController {
         return "pmhDetails";
     }
 
-    @GetMapping("/medicalHistoryForm/{pid}")
-    public String showMedicalHistoryForm(@PathVariable("pid") Long personnelId,
+    @GetMapping("/medicalHistoryForm/{personnelId}")
+    public String showMedicalHistoryForm(@PathVariable Long personnelId,
                                          Model model){
         PersonnelMedicalHistory personnelMedicalHistory =
                 new PersonnelMedicalHistory();
@@ -50,9 +53,9 @@ public class PersonnelMedicalHistoryController {
         return "pmhForm";
     }
 
-    @PostMapping("/savePmh/{pid}")
-    public String saveMedicalHistory(@PathVariable("pid") Long personnelId,
-                                     @ModelAttribute("personnelMedicalHistory") PersonnelMedicalHistory personnelMedicalHistory){
+    @PostMapping("/savePmh/{personnelId}")
+    public String saveMedicalHistory(@PathVariable Long personnelId,
+                                     @ModelAttribute PersonnelMedicalHistory personnelMedicalHistory){
         personnelMedicalHistoryService.savePersonnelMedicalHistory(personnelMedicalHistory, personnelId);
 
         return "redirect:/rng/p/showPersonnel/" + personnelId;

@@ -1,4 +1,4 @@
-package com.example.RENGAW.controller;
+package com.example.RENGAW.controller.rest;
 
 import com.example.RENGAW.entity.ArmouredCarrier;
 import com.example.RENGAW.service.ArmouredCarrierService;

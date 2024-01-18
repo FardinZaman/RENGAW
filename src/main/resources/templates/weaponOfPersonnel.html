@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap">
+</head>
+<body style="background-color: #112; color: #fff;">
+
+<div class="container my-2">
+    <h1> Weapon List </h1>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th>
+                Weapon Serial Number
+            </th>
+            <th>
+                Gun Type
+            </th>
+            <th>
+                Gun Model
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="weapon : ${weaponList}">
+            <td th:text="${weapon.weaponSerialNumber}"></td>
+            <td th:text="${weapon.gunType}"></td>
+            <td th:text="${weapon.gunModel}"></td>
+            <td>
+                <a th:href=@{/rng/w/showWeapon/{wsn}(wsn=${weapon.weaponSerialNumber})} class="btn btn-primary btn-block">
+                    View Details
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <a th:href="@{/rng/p/showPersonnel/{pid}(pid=${personnelId})}"
+           class="btn btn-secondary btn-back">
+            Back to Personnel
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

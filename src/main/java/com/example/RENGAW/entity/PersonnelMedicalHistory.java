@@ -36,10 +36,6 @@ public class PersonnelMedicalHistory {
             fetch = FetchType.LAZY,
             optional = false
     )
-    @JoinColumn(
-            name = "personnel_id",
-            referencedColumnName = "id"
-    )
     @JsonIgnore
     private Personnel personnel;
 

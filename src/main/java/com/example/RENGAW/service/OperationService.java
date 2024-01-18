@@ -23,22 +23,21 @@ import java.util.stream.Collectors;
 @Service
 public class OperationService{
 
-    @Autowired
-    private OperationRepository operationRepository;
-
-    @Autowired
-    private PersonnelRepository personnelRepository;
-
-    @Autowired
-    private TeamRepository teamRepository;
-
-    @Autowired
-    private TeamService teamService;
-
-    @Autowired
-    private EmailSenderService emailSenderService;
-
+    private final OperationRepository operationRepository;
+    private final PersonnelRepository personnelRepository;
+    private final TeamRepository teamRepository;
+    private final TeamService teamService;
+    private final EmailSenderService emailSenderService;
     private OperationDTOMapper operationDTOMapper;
+
+    @Autowired
+    public OperationService(OperationRepository operationRepository, PersonnelRepository personnelRepository, TeamRepository teamRepository, TeamService teamService, EmailSenderService emailSenderService) {
+        this.operationRepository = operationRepository;
+        this.personnelRepository = personnelRepository;
+        this.teamRepository = teamRepository;
+        this.teamService = teamService;
+        this.emailSenderService = emailSenderService;
+    }
 
     public void sendEmailToTeamPersonnel(Team team, Operation operation) {
         List<Personnel> personnelList = personnelRepository.findAllByTeamId(team.getId());
@@ -83,7 +82,7 @@ public class OperationService{
         checkConflictWithActiveOperations(operation, team);
 
         if(teamService.isReady(team)){
-            operation.getOperationTeams().add(team);
+            operation.getTeam().add(team);
         }
         else {
             throw new TeamNotReadyException("Team " + team.getTeamCodeName() + " is not ready");
