@@ -17,6 +17,11 @@ public class Weapon {
 //            generator = "weapon_serial_number_sequence"
 //    )
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
+    private Long id;
+
     @Column(unique = true)
     @NotNull
     @Positive
@@ -59,6 +64,14 @@ public class Weapon {
     private Personnel personnel;
 
     public Weapon() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getWeaponSerialNumber() {
@@ -144,15 +157,16 @@ public class Weapon {
     @Override
     public String toString() {
         return "Weapon{" +
-                "weaponSerialNumber=" + weaponSerialNumber +
+                "id=" + id +
+                ", weaponSerialNumber=" + weaponSerialNumber +
                 ", gunType='" + gunType + '\'' +
                 ", gunModel='" + gunModel + '\'' +
                 ", bulletCaliber='" + bulletCaliber + '\'' +
                 ", productionCompany='" + productionCompany + '\'' +
                 ", productionYear='" + productionYear + '\'' +
-                ", sandTestStatus='" + sandTestStatus + '\'' +
-                ", mudTestStatus='" + mudTestStatus + '\'' +
-                ", iceTestStatus='" + iceTestStatus + '\'' +
+                ", sandTestStatus=" + sandTestStatus +
+                ", mudTestStatus=" + mudTestStatus +
+                ", iceTestStatus=" + iceTestStatus +
                 '}';
     }
 }

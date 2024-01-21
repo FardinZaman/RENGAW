@@ -50,7 +50,7 @@ public class PersonnelMedicalHistoryService{
     }
 
     public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByName(String personnelName) {
-        return personnelMedicalHistoryRepository.findPersonnelMedicalHistoryByName(personnelName);
+        return personnelMedicalHistoryRepository.findByPersonnelFirstNameOrPersonnelLastName(personnelName, personnelName);
     }
 
     public PersonnelMedicalHistory updatePersonnelMedicalHistoryByEmailId(PersonnelMedicalHistory personnelMedicalHistory, String emailId) {

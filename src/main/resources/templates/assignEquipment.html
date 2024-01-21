@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap">
+</head>
+<body style="background-color: #112; color: #fff;">
+
+<div class="container my-2">
+    <div class="card-header text-center" style="font-size: 24px;">
+        Already Assigned Equipments to <span th:text="${personnelName}"></span>, ID: <span th:text="${personnelId}"></span>
+    </div>
+
+    <div th:each="equipment : ${equipmentList}" class="equipment-box">
+        <div class="card my-2">
+            <div class="card-body">
+                <p class="mb-0" style="font-size: 18px;">Equipment Serial Number: <span th:text="${equipment.equipmentSerialNumber}"></span></p>
+                <p class="mb-0" style="font-size: 18px;">Equipment Type: <span th:text="${equipment.equipmentType}"></span></p>
+                <p class="mb-0" style="font-size: 18px;">Equipment Model: <span th:text="${equipment.equipmentModel}"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a th:href="@{/rng/e/finalizePersonnel/pid/{pid}/serial/{esn}(pid=${personnelId},esn=${equipmentSerialNumber})}"
+           class="btn btn-success btn-block">
+            Assign This Equipment to <span th:text="${personnelName}"></span>
+        </a>
+    </div>
+    <br>
+    <div class="text-center">
+        <a th:href="@{/rng/e/assignEquipment/{esn}(esn=${equipmentSerialNumber})}"
+           class="btn btn-secondary btn-back">
+            Back to Personnel Choosing
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

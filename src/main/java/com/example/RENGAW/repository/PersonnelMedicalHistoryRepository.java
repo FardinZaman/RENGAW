@@ -13,17 +13,19 @@ import java.util.Optional;
 public interface PersonnelMedicalHistoryRepository extends JpaRepository<PersonnelMedicalHistory, Long> {
     public Optional<PersonnelMedicalHistory> findByPersonnelId(Long personnelId);
 
-    @Query(
-            value = "SELECT *\n" +
-                    "FROM personnel_medical_history pmh\n" +
-                    "WHERE pmh.personnel_id IN (\n" +
-                    "    SELECT p.id\n" +
-                    "    FROM personnel p\n" +
-                    "    WHERE p.first_name = :personnel_name OR p.last_name = :personnel_name\n" +
-                    ")",
-            nativeQuery = true
-    )
-    public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByName(@Param("personnel_name") String personnelName);
+//    @Query(
+//            "SELECT pmh " +
+//                    "FROM PersonnelMedicalHistory pmh " +
+//                    "WHERE pmh.personnel.id IN (" +
+//                    "    SELECT p.id " +
+//                    "    FROM Personnel p " +
+//                    "    WHERE p.firstName = :personnelName OR p.lastName = :personnelName" +
+//                    ")"
+//    )
+//    public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByName(@Param("personnelName") String personnelName);
+
+    public List<PersonnelMedicalHistory> findByPersonnelFirstNameOrPersonnelLastName(String firstName, String lastName);
+
 
     @Query(
             "SELECT pmh FROM PersonnelMedicalHistory pmh " +

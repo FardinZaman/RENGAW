@@ -161,7 +161,7 @@ public class Team {
     @Override
     public String toString() {
         return "Team{" +
-                "teamId=" + id +
+                "id=" + id +
                 ", teamCodeName='" + teamCodeName + '\'' +
                 ", currentLead='" + currentLead + '\'' +
                 ", currentLeadId=" + currentLeadId +

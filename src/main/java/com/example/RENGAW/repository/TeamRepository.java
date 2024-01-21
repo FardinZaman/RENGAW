@@ -21,7 +21,7 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
                     "JOIN p.team t " +
                     "WHERE t.id = :teamId"
     )
-    public List<Weapon> findWeaponUsedByTeamPersonnelByTeamId(@Param("teamId") Long teamId);
+    public List<Weapon> findWeaponUsedByTeamPersonnelByTeamId(Long teamId);
 
     @Query(
             "SELECT e FROM Equipment e " +
@@ -29,7 +29,7 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
                     "JOIN p.team t " +
                     "WHERE t.id = :teamId"
     )
-    public List<Equipment> findEquipmentUsedByTeamPersonnelByTeamId(@Param("teamId") Long teamId);
+    public List<Equipment> findEquipmentUsedByTeamPersonnelByTeamId(Long teamId);
 
     Optional<Team> findByTeamCodeName(String teamCodeName);
 }

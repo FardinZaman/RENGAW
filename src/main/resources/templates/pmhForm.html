@@ -15,7 +15,7 @@
         <span class="text-success">[[${personnel.currentRank + ' ' + personnel.firstName + ' ' + personnel.lastName}]]</span>
     </h2>
     <form action="#" th:action="@{/rng/pmh/savePmh/{pid}(pid=${personnel.id})}" th:object="${personnelMedicalHistory}" method="post">
-        <input th:if="${formType eq 'u'}" type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{id}">
         <input type="text" th:field="*{surgeries}" placeholder="Surgeries" class="form-control mb-4 col-4">
         <input type="text" th:field="*{chronicIllness}" placeholder="Chronic Illness" class="form-control mb-4 col-4">
         <input type="text" th:field="*{medications}" placeholder="Medications" class="form-control mb-4 col-4">

@@ -2,10 +2,7 @@ package com.example.RENGAW.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Equipment {
@@ -20,7 +17,14 @@ public class Equipment {
 //            generator = "equipment_serial_number_sequence"
 //    )
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
+    private Long id;
+
     @Column(unique = true)
+    @NotNull
+    @Positive
     private Long equipmentSerialNumber;
 
     @NotNull
@@ -47,7 +51,7 @@ public class Equipment {
     private boolean radioActive;
 
     @NotNull
-    private double weightInGrams;
+    private Double weightInGrams;
 
     @Size(max = 10000)
     private String description;
@@ -60,6 +64,14 @@ public class Equipment {
     private Personnel personnel;
 
     public Equipment() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getEquipmentSerialNumber() {
@@ -126,11 +138,11 @@ public class Equipment {
         this.radioActive = radioActive;
     }
 
-    public double getWeightInGrams() {
+    public Double getWeightInGrams() {
         return weightInGrams;
     }
 
-    public void setWeightInGrams(double weightInGrams) {
+    public void setWeightInGrams(Double weightInGrams) {
         this.weightInGrams = weightInGrams;
     }
 
@@ -153,7 +165,8 @@ public class Equipment {
     @Override
     public String toString() {
         return "Equipment{" +
-                "equipmentSerialNumber=" + equipmentSerialNumber +
+                "id=" + id +
+                ", equipmentSerialNumber=" + equipmentSerialNumber +
                 ", equipmentType='" + equipmentType + '\'' +
                 ", equipmentModel='" + equipmentModel + '\'' +
                 ", lethal=" + lethal +

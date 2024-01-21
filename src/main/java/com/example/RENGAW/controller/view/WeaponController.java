@@ -4,10 +4,12 @@ import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.entity.Weapon;
 import com.example.RENGAW.service.PersonnelService;
 import com.example.RENGAW.service.WeaponService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,13 +60,17 @@ public class WeaponController {
     public String showNewWeaponForm(Model model){
         Weapon weapon = new Weapon();
         model.addAttribute("weapon", weapon);
-        model.addAttribute("formType", "n");
 
         return "weaponForm";
     }
 
     @PostMapping("/saveWeapon")
-    public String saveWeapon(@ModelAttribute("weapon") Weapon weapon){
+    public String saveWeapon(@Valid @ModelAttribute Weapon weapon,
+                             BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "weaponForm";
+        }
+
         weaponService.saveWeapon(weapon);
 
         return "redirect:/rng/w/";
@@ -79,18 +85,17 @@ public class WeaponController {
         return "weaponDetails";
     }
 
-    @GetMapping("updateWeaponForm/{wsn}")
+    @GetMapping("/updateWeaponForm/{wsn}")
     public String showUpdateWeaponForm(@PathVariable("wsn") Long weaponSerialNumber,
                                           Model model){
         Weapon weapon = weaponService.findWeaponBySerialNumber(weaponSerialNumber);
         model.addAttribute("weapon", weapon);
-        model.addAttribute("formType", "u");
 
         return "weaponForm";
     }
 
     @GetMapping("/deleteWeapon/{wsn}")
-    public String deletePersonnel(@PathVariable("wsn") Long weaponSerialNumber){
+    public String deleteWeapon(@PathVariable("wsn") Long weaponSerialNumber){
         weaponService.deleteWeaponBySerialNumber(weaponSerialNumber);
 
         return "redirect:/rng/w/";

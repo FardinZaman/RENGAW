@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap">
+</head>
+<body style="background-color: #112; color: #fff;">
+<div class="container">
+    <h1>RENGAW</h1>
+    <hr>
+    <h2>Equipment Form: </h2>
+    <form action="#" th:action="@{/rng/e/saveEquipment}" th:object="${equipment}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <input type="number" th:field="*{equipmentSerialNumber}" placeholder="Equipment Serial Number" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{equipmentType}" placeholder="Equipment Type" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{equipmentModel}" placeholder="Equipment Model" class="form-control mb-4 col-4">
+
+        <input type="checkbox" th:field="*{lethal}" class="form-check-input" id="lethalCheckbox">
+        <label class="form-check-label" for="lethalCheckbox">Lethal</label>
+        &nbsp;&nbsp;
+        <input type="checkbox" th:field="*{radioActive}" class="form-check-input" id="radioActiveCheckbox">
+        <label class="form-check-label" for="radioActiveCheckbox">Radio-Active</label>
+
+        <input type="text" th:field="*{productionCompany}" placeholder="Production Company" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{productionYear}" placeholder="Production Year" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{materialsUsed}" placeholder="Materials" class="form-control mb-4 col-4">
+        <input type="number" step="0.01" th:field="*{weightInGrams}" placeholder="Weight In Grams" class="form-control mb-4 col-4">
+
+        <textarea th:field="*{description}" placeholder="Description" class="form-control mb-4 col-8" rows="6"></textarea>
+
+
+        <button type="submit" class="btn btn-info col-2"> Save Weapon </button>
+
+    </form>
+</div>
+</body>
+</html>

@@ -33,7 +33,6 @@ public class Personnel {
     private String lastName;
 
     @Column(
-            name = "email_address",
             nullable = false,
             unique = true
     )
@@ -163,7 +162,7 @@ public class Personnel {
     @Override
     public String toString() {
         return "Personnel{" +
-                "personnelId=" + id +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", emailId='" + email + '\'' +

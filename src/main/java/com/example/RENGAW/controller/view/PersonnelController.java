@@ -2,10 +2,14 @@ package com.example.RENGAW.controller.view;
 
 import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.service.PersonnelService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,13 +59,17 @@ public class PersonnelController {
     public String showNewPersonnelForm(Model model){
         Personnel personnel = new Personnel();
         model.addAttribute("personnel", personnel);
-        model.addAttribute("formType", "n");
 
         return "personnelForm";
     }
 
     @PostMapping("/savePersonnel")
-    public String savePersonnel(@ModelAttribute Personnel personnel){
+    public String savePersonnel(@Valid @ModelAttribute Personnel personnel,
+                                BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "personnelForm";
+        }
+
         personnelService.savePersonnel(personnel);
 
         return "redirect:/rng/p/";
@@ -81,7 +89,6 @@ public class PersonnelController {
                                           Model model){
         Personnel personnel = personnelService.findPersonnelById(personnelId);
         model.addAttribute("personnel", personnel);
-        model.addAttribute("formType", "u");
 
         return "personnelForm";
     }

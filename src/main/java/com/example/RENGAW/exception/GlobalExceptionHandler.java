@@ -45,4 +45,10 @@ public class GlobalExceptionHandler {
     public String handleDateNotValidException(DateNotValidException dateNotValidException){
         return dateNotValidException.getMessage();
     }
+
+    @ExceptionHandler(SerialNotUniqueException.class)
+    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+    public String handleSerialNotUniqueException(SerialNotUniqueException serialNotUniqueException){
+        return serialNotUniqueException.getMessage();
+    }
 }

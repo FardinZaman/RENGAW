@@ -4,9 +4,11 @@ import com.example.RENGAW.entity.Personnel;
 import com.example.RENGAW.entity.PersonnelMedicalHistory;
 import com.example.RENGAW.service.PersonnelMedicalHistoryService;
 import com.example.RENGAW.service.PersonnelService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -48,14 +50,18 @@ public class PersonnelMedicalHistoryController {
 
         model.addAttribute("personnelMedicalHistory", personnelMedicalHistory);
         model.addAttribute("personnel", personnel);
-        model.addAttribute("formType", "n");
 
         return "pmhForm";
     }
 
     @PostMapping("/savePmh/{personnelId}")
     public String saveMedicalHistory(@PathVariable Long personnelId,
-                                     @ModelAttribute PersonnelMedicalHistory personnelMedicalHistory){
+                                     @Valid @ModelAttribute PersonnelMedicalHistory personnelMedicalHistory,
+                                     BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "pmhForm";
+        }
+
         personnelMedicalHistoryService.savePersonnelMedicalHistory(personnelMedicalHistory, personnelId);
 
         return "redirect:/rng/p/showPersonnel/" + personnelId;
@@ -69,7 +75,6 @@ public class PersonnelMedicalHistoryController {
 
         model.addAttribute("personnelMedicalHistory", personnelMedicalHistory);
         model.addAttribute("personnel", personnelMedicalHistory.getPersonnel());
-        model.addAttribute("formType", "u");
 
         return "pmhForm";
     }

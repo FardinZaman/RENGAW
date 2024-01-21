@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,12 @@ public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
                     "JOIN Weapon w ON p = w.personnel " +
                     "WHERE w.gunModel LIKE %:gunModel%"
     )
-    public List<Equipment> findEquipmentUsedByPersonnelFromGunModel(@Param("gunModel") String gunModel);
+    public List<Equipment> findEquipmentUsedByPersonnelFromGunModel(String gunModel);
 
     public Optional<Equipment> findByEquipmentTypeContainingIgnoreCase(String equipmentType);
+
+    @Transactional
+    public void deleteByEquipmentSerialNumber(Long equipmentSerialNumber);
+
+    public List<Equipment> findByPersonnelId(Long personnelId);
 }

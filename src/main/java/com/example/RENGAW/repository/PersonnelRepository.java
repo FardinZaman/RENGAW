@@ -21,24 +21,22 @@ public interface PersonnelRepository extends JpaRepository<Personnel, Long> {
     public List<Personnel> findByFirstNameAndLastNameIgnoreCase(String firstName, String lastName);
 
     @Query(
-            value = "SELECT p.status FROM personnel p where p.email_address = :email_address",
-            nativeQuery = true
+            "SELECT p.status FROM Personnel p where p.email = :email"
     )
-    public Optional<String> findStatusByEmail(@Param("email_address") String email);
+    public Optional<String> findStatusByEmail(String email);
 
     public Optional<Personnel> findByEmail(String email);
 
     @Transactional
     @Modifying
     @Query(
-            value = "UPDATE personnel p\n" +
+            "UPDATE Personnel p\n" +
                     "SET p.status = 'Unavailable until cleared by Dr. Bekhterev'\n" +
                     "WHERE p.id IN (\n" +
-                    "    SELECT pmh.personnel_id\n" +
-                    "    FROM personnel_medical_history pmh\n" +
-                    "    WHERE pmh.chronic_illness = 'Depression'\n" +
-                    ")",
-            nativeQuery = true
+                    "    SELECT pmh.personnel.id\n" +
+                    "    FROM PersonnelMedicalHistory pmh\n" +
+                    "    WHERE pmh.chronicIllness = 'Depression'\n" +
+                    ")"
     )
     public void updatePersonnelStatusIfDepressed();
 
@@ -50,7 +48,7 @@ public interface PersonnelRepository extends JpaRepository<Personnel, Long> {
             "SELECT COUNT(p) = SUM(CASE WHEN p.status = 'Available' THEN 1 ELSE 0 END) " +
                     "FROM Personnel p WHERE p.team.id = :teamId"
     )
-    public boolean checkAllStatusAvailableByTeamId(@Param("teamId") Long teamId);
+    public boolean checkAllStatusAvailableByTeamId(Long teamId);
 
     public List<Personnel> findAllByTeamId(Long teamId);
 }

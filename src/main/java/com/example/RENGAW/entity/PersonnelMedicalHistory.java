@@ -133,7 +133,7 @@ public class PersonnelMedicalHistory {
     @Override
     public String toString() {
         return "PersonnelMedicalHistory{" +
-                "personnelMedicalHistoryId=" + id +
+                "id=" + id +
                 ", surgeries='" + surgeries + '\'' +
                 ", chronicIllness='" + chronicIllness + '\'' +
                 ", medications='" + medications + '\'' +

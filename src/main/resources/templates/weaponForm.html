@@ -13,8 +13,8 @@
     <hr>
     <h2>Weapon Form: </h2>
     <form action="#" th:action="@{/rng/w/saveWeapon}" th:object="${weapon}" method="post">
-        <input th:if="${formType eq 'n'}" type="number" th:field="*{weaponSerialNumber}" placeholder="Weapon Serial Number" class="form-control mb-4 col-4">
-        <input th:if="${formType eq 'u'}" type="hidden" th:field="*{weaponSerialNumber}">
+        <input type="hidden" th:field="*{id}">
+        <input type="number" th:field="*{weaponSerialNumber}" placeholder="Weapon Serial Number" class="form-control mb-4 col-4">
         <input type="text" th:field="*{gunType}" placeholder="Gun Type" class="form-control mb-4 col-4">
         <input type="text" th:field="*{gunModel}" placeholder="Gun Model" class="form-control mb-4 col-4">
         <input type="text" th:field="*{bulletCaliber}" placeholder="Bullet Caliber" class="form-control mb-4 col-4">

@@ -19,14 +19,14 @@ public interface WeaponRepository extends JpaRepository<Weapon, Long> {
     @Query(
             "SELECT w.personnel FROM Weapon w WHERE w.weaponSerialNumber = :weaponSerialNumber"
     )
-    public Optional<Personnel> findWeaponUserByWeaponSerialNumber(@Param("weaponSerialNumber") Long weaponSerialNumber);
+    public Optional<Personnel> findWeaponUserByWeaponSerialNumber(Long weaponSerialNumber);
 
     public List<Weapon> findByPersonnelId(Long personnelId);
 
     @Query(
             "SELECT w.personnel FROM Weapon w WHERE w.productionCompany LIKE %:productionCompany%"
     )
-    public List<Personnel> findWeaponUserByWeaponProductionCompany(@Param("productionCompany") String productionCompany);
+    public List<Personnel> findWeaponUserByWeaponProductionCompany(String productionCompany);
 
     @Query(
             "SELECT w.personnel FROM Weapon w WHERE " +
@@ -38,8 +38,10 @@ public interface WeaponRepository extends JpaRepository<Weapon, Long> {
             "SELECT w.personnel.personnelMedicalHistory FROM Weapon w " +
                     "WHERE w.gunType LIKE %:gunType%"
     )
-    public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByGunType(@Param("gunType") String gunType);
+    public List<PersonnelMedicalHistory> findPersonnelMedicalHistoryByGunType(String gunType);
 
     @Transactional
-    void deleteByWeaponSerialNumber(Long weaponSerialNumber);
+    public void deleteByWeaponSerialNumber(Long weaponSerialNumber);
+
+    public boolean existsByWeaponSerialNumber(Long weaponSerialNumber);
 }
