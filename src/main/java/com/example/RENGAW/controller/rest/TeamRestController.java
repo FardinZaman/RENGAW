@@ -26,7 +26,7 @@ public class TeamRestController {
             String errorMsg = bindingResult.getAllErrors().getFirst().getDefaultMessage();
             throw new ValidationException(errorMsg);
         }
-        return teamService.createTeam(team);
+        return teamService.saveTeam(team);
     }
 
     @PutMapping("/assignToTeam/{tid}/{pid}")

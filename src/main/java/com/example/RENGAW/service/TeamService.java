@@ -11,8 +11,12 @@ import com.example.RENGAW.repository.PersonnelRepository;
 import com.example.RENGAW.repository.TeamRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +29,6 @@ public class TeamService{
     private final PersonnelRepository personnelRepository;
     private final EquipmentRepository equipmentRepository;
 
-    @Autowired
     public TeamService(TeamRepository teamRepository, PersonnelRepository personnelRepository, EquipmentRepository equipmentRepository) {
         this.teamRepository = teamRepository;
         this.personnelRepository = personnelRepository;
@@ -55,8 +58,18 @@ public class TeamService{
         }
     }
 
-    public Team createTeam(Team team) {
-        return teamRepository.save(assignPersonnelToTeam(team, team.getCurrentLeadId()));
+    public Team saveTeam(Team team) {
+        Long teamLeadId = team.getCurrentLeadId();
+        Personnel teamLead = personnelRepository.findById(teamLeadId)
+                .orElseThrow(() -> new EntityNotFoundException("No personnel with Id : " + teamLeadId));
+        if(teamLead.getTeam() == null){
+            System.out.println("New Team");
+            team = assignPersonnelToTeam(team, team.getCurrentLeadId());
+            team.setCurrentLead(teamLead.getCurrentRank() + " " + teamLead.getFirstName() + " " + teamLead.getLastName());
+        }
+
+        return teamRepository.save(team);
+//        return teamRepository.save(assignPersonnelToTeam(team, team.getCurrentLeadId()));
     }
 
     public Team assignPersonnelToTeam(Team team, Long personnelId){
@@ -131,4 +144,28 @@ public class TeamService{
         return teamRepository.findWeaponUsedByTeamPersonnelByTeamId(personnel.getTeam().getId());
     }
 
+    public void removePersonnelFromTeam(Long teamId){
+        List<Personnel> personnelList = personnelRepository.findAllByTeamId(teamId);
+        for(Personnel personnel : personnelList){
+            personnel.setTeam(null);
+        }
+    }
+
+    public Page<Team> findAllTeamPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        return teamRepository.findAll(pageable);
+    }
+
+    public Team findTeamById(Long teamId) {
+        return teamRepository.findById(teamId).
+                orElseThrow(() -> new EntityNotFoundException("No Team with Id : " + teamId));
+    }
+
+    @Transactional
+    public void deleteTeamById(Long teamId) {
+        removePersonnelFromTeam(teamId);
+
+        teamRepository.deleteById(teamId);
+    }
 }

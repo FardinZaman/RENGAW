@@ -18,7 +18,6 @@ public class PersonnelMedicalHistoryService{
     private final PersonnelMedicalHistoryRepository personnelMedicalHistoryRepository;
     private final PersonnelRepository personnelRepository;
 
-    @Autowired
     public PersonnelMedicalHistoryService(PersonnelMedicalHistoryRepository personnelMedicalHistoryRepository, PersonnelRepository personnelRepository) {
         this.personnelMedicalHistoryRepository = personnelMedicalHistoryRepository;
         this.personnelRepository = personnelRepository;

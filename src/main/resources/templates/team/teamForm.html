@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap">
+</head>
+<body style="background-color: #112; color: #fff;">
+<div class="container">
+    <h1>RENGAW</h1>
+    <hr>
+    <h2>Team Form: </h2>
+    <form action="#" th:action="@{/rng/t/saveTeam}" th:object="${team}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{hasBallisticExpert}">
+        <input type="hidden" th:field="*{hasExplosiveExpert}">
+        <input type="hidden" th:field="*{hasTechnologyExpert}">
+        <input type="hidden" th:field="*{additionalExpertise}">
+        <input type="text" th:field="*{teamCodeName}" placeholder="Team Code Name" class="form-control mb-4 col-4">
+        <input type="hidden" th:field="*{currentLead}">
+        <input type="number" th:field="*{currentLeadId}" placeholder="Current Lead Id" class="form-control mb-4 col-4">
+        <input type="number" th:field="*{teamMemberCount}" placeholder="Team Member Count" class="form-control mb-4 col-4">
+        <input type="number" th:field="*{totalMissionExecuted}" placeholder="Total Mission" class="form-control mb-4 col-4">
+        <input type="number" th:field="*{totalMissionSuccess}" placeholder="Successful Mission" class="form-control mb-4 col-4">
+        <input type="number" th:field="*{totalCasualties}" placeholder="Total Casualties" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{friendlyFireIncidents}" placeholder="Friendly Fire Incidents" class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2"> Save Team </button>
+
+    </form>
+</div>
+</body>
+</html>

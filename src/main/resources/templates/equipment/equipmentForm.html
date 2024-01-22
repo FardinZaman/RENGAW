@@ -14,6 +14,7 @@
     <h2>Equipment Form: </h2>
     <form action="#" th:action="@{/rng/e/saveEquipment}" th:object="${equipment}" method="post">
         <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{personnel}">
         <input type="number" th:field="*{equipmentSerialNumber}" placeholder="Equipment Serial Number" class="form-control mb-4 col-4">
         <input type="text" th:field="*{equipmentType}" placeholder="Equipment Type" class="form-control mb-4 col-4">
         <input type="text" th:field="*{equipmentModel}" placeholder="Equipment Model" class="form-control mb-4 col-4">

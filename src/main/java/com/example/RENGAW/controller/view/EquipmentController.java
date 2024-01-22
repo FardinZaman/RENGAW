@@ -22,7 +22,6 @@ public class EquipmentController {
     private final EquipmentService equipmentService;
     private final PersonnelService personnelService;
 
-    @Autowired
     public EquipmentController(EquipmentService equipmentService, PersonnelService personnelService) {
         this.equipmentService = equipmentService;
         this.personnelService = personnelService;
@@ -54,7 +53,7 @@ public class EquipmentController {
 
         model.addAttribute("equipmentList", equipmentList);
 
-        return "allEquipment";
+        return "equipment/allEquipment";
     }
 
     @GetMapping("/newEquipmentForm")
@@ -62,14 +61,14 @@ public class EquipmentController {
         Equipment equipment = new Equipment();
         model.addAttribute("equipment", equipment);
 
-        return "equipmentForm";
+        return "equipment/equipmentForm";
     }
 
     @PostMapping("/saveEquipment")
     public String saveEquipment(@Valid @ModelAttribute Equipment equipment,
                              BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "equipmentForm";
+            return "equipment/equipmentForm";
         }
 
         equipmentService.saveEquipment(equipment);
@@ -83,7 +82,7 @@ public class EquipmentController {
         Equipment equipment = equipmentService.findEquipmentBySerialNumber(equipmentSerialNumber);
         model.addAttribute("equipment", equipment);
 
-        return "equipmentDetails";
+        return "equipment/equipmentDetails";
     }
     @GetMapping("/updateEquipmentForm/{esn}")
     public String showUpdateEquipmentForm(@PathVariable("esn") Long equipmentSerialNumber,
@@ -91,7 +90,7 @@ public class EquipmentController {
         Equipment equipment = equipmentService.findEquipmentBySerialNumber(equipmentSerialNumber);
         model.addAttribute("equipment", equipment);
 
-        return "equipmentForm";
+        return "equipment/equipmentForm";
     }
 
     @GetMapping("/deleteEquipment/{esn}")
@@ -109,7 +108,7 @@ public class EquipmentController {
         model.addAttribute("personnelList", personnelList);
         model.addAttribute("equipmentSerialNumber", equipmentSerialNumber);
 
-        return "personnelForEquipment";
+        return "equipment/personnelForEquipment";
     }
 
     @GetMapping("/equipmentToPersonnel/pid/{pid}/serial/{esn}")
@@ -128,7 +127,7 @@ public class EquipmentController {
         model.addAttribute("personnelName", personnel.getCurrentRank()+' '+personnel.getFirstName()+' '+personnel.getLastName());
         model.addAttribute("equipmentSerialNumber", equipmentSerialNumber);
 
-        return "assignEquipment";
+        return "equipment/assignEquipment";
     }
 
     @GetMapping("/finalizePersonnel/pid/{pid}/serial/{esn}")
@@ -147,7 +146,7 @@ public class EquipmentController {
         model.addAttribute("equipmentList", equipmentList);
         model.addAttribute("personnelId", personnelId);
 
-        return "equipmentOfPersonnel";
+        return "equipment/equipmentOfPersonnel";
     }
 
     @GetMapping("/removePersonnel/{esn}")

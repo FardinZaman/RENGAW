@@ -30,7 +30,6 @@ public class OperationService{
     private final EmailSenderService emailSenderService;
     private OperationDTOMapper operationDTOMapper;
 
-    @Autowired
     public OperationService(OperationRepository operationRepository, PersonnelRepository personnelRepository, TeamRepository teamRepository, TeamService teamService, EmailSenderService emailSenderService) {
         this.operationRepository = operationRepository;
         this.personnelRepository = personnelRepository;

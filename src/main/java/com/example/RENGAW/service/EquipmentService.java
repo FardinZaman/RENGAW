@@ -22,7 +22,6 @@ public class EquipmentService{
     private final EquipmentRepository equipmentRepository;
     private final PersonnelRepository personnelRepository;
 
-    @Autowired
     public EquipmentService(EquipmentRepository equipmentRepository, PersonnelRepository personnelRepository) {
         this.equipmentRepository = equipmentRepository;
         this.personnelRepository = personnelRepository;

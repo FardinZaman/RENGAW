@@ -20,7 +20,6 @@ public class PersonnelService{
     private final PersonnelRepository personnelRepository;
     private final TeamService teamService;
 
-    @Autowired
     public PersonnelService(PersonnelRepository personnelRepository, TeamService teamService) {
         this.personnelRepository = personnelRepository;
         this.teamService = teamService;
@@ -82,5 +81,13 @@ public class PersonnelService{
 
     public List<Personnel> findAllPersonnel() {
         return personnelRepository.findAll();
+    }
+
+    public List<Personnel> findPersonnelOfTeam(Long teamId) {
+        return personnelRepository.findAllByTeamId(teamId);
+    }
+
+    public List<Personnel> findPersonnelWithoutTeam() {
+        return personnelRepository.findByTeamIsNull();
     }
 }

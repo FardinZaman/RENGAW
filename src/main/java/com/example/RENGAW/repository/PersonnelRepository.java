@@ -51,4 +51,6 @@ public interface PersonnelRepository extends JpaRepository<Personnel, Long> {
     public boolean checkAllStatusAvailableByTeamId(Long teamId);
 
     public List<Personnel> findAllByTeamId(Long teamId);
+
+    public List<Personnel> findByTeamIsNull();
 }

@@ -69,6 +69,17 @@
                 <li th:each="expertise : ${personnel.expertise}" th:text="${expertise}"></li>
             </ul>
 
+            <div th:if="${personnel.team != null}">
+                <p>
+                    <strong>Assigned Team:</strong>
+                    <a th:href="@{/rng/t/showTeam/{tid}(tid=${personnel.team.id})}">
+                        <span style="font-size: 20px; color: yellow;"
+                              th:text="${personnel.team.teamCodeName}">
+                        </span>
+                    </a>
+                </p>
+            </div>
+
             <div class="btn-container btn-group-vertical">
                 <a class="btn btn-info btn-lg" style="border-radius: 12px" th:href="@{/rng/w/weaponOfPersonnel/{pid}(pid=${personnel.id})}">
                     Weapon

@@ -18,7 +18,6 @@ public class PersonnelMedicalHistoryController {
     private final PersonnelMedicalHistoryService personnelMedicalHistoryService;
     private final PersonnelService personnelService;
 
-    @Autowired
     public PersonnelMedicalHistoryController(PersonnelMedicalHistoryService personnelMedicalHistoryService, PersonnelService personnelService) {
         this.personnelMedicalHistoryService = personnelMedicalHistoryService;
         this.personnelService = personnelService;
@@ -33,12 +32,12 @@ public class PersonnelMedicalHistoryController {
         model.addAttribute("personnelId", personnelId);
 
         if(personnelMedicalHistory == null){
-            return "addPmh";
+            return "pmh/addPmh";
         }
 
         model.addAttribute("personnelMedicalHistory", personnelMedicalHistory);
 
-        return "pmhDetails";
+        return "pmh/pmhDetails";
     }
 
     @GetMapping("/medicalHistoryForm/{personnelId}")
@@ -51,7 +50,7 @@ public class PersonnelMedicalHistoryController {
         model.addAttribute("personnelMedicalHistory", personnelMedicalHistory);
         model.addAttribute("personnel", personnel);
 
-        return "pmhForm";
+        return "pmh/pmhForm";
     }
 
     @PostMapping("/savePmh/{personnelId}")
@@ -59,7 +58,7 @@ public class PersonnelMedicalHistoryController {
                                      @Valid @ModelAttribute PersonnelMedicalHistory personnelMedicalHistory,
                                      BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "pmhForm";
+            return "pmh/pmhForm";
         }
 
         personnelMedicalHistoryService.savePersonnelMedicalHistory(personnelMedicalHistory, personnelId);
@@ -76,7 +75,7 @@ public class PersonnelMedicalHistoryController {
         model.addAttribute("personnelMedicalHistory", personnelMedicalHistory);
         model.addAttribute("personnel", personnelMedicalHistory.getPersonnel());
 
-        return "pmhForm";
+        return "pmh/pmhForm";
     }
 
     @GetMapping("/deletePmh/{pmhid}")

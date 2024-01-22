@@ -20,7 +20,6 @@ public class PersonnelController {
 
     private final PersonnelService personnelService;
 
-    @Autowired
     public PersonnelController(PersonnelService personnelService) {
         this.personnelService = personnelService;
     }
@@ -52,7 +51,7 @@ public class PersonnelController {
 
         model.addAttribute("personnelList", personnelList);
 
-        return "allPersonnel";
+        return "personnel/allPersonnel";
     }
 
     @GetMapping("/newPersonnelForm")
@@ -60,7 +59,7 @@ public class PersonnelController {
         Personnel personnel = new Personnel();
         model.addAttribute("personnel", personnel);
 
-        return "personnelForm";
+        return "personnel/personnelForm";
     }
 
     @PostMapping("/savePersonnel")
@@ -81,7 +80,7 @@ public class PersonnelController {
         Personnel personnel = personnelService.findPersonnelById(personnelId);
         model.addAttribute("personnel", personnel);
 
-        return "personnelDetails";
+        return "personnel/personnelDetails";
     }
 
     @GetMapping("updatePersonnelForm/{personnelId}")
@@ -90,7 +89,7 @@ public class PersonnelController {
         Personnel personnel = personnelService.findPersonnelById(personnelId);
         model.addAttribute("personnel", personnel);
 
-        return "personnelForm";
+        return "personnel/personnelForm";
     }
 
     @GetMapping("/deletePersonnel/{personnelId}")

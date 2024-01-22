@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Range;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,8 +28,8 @@ public class Team {
     @Column(unique = true)
     private String teamCodeName;
 
-    @NotNull
-    @Pattern(regexp = "\\p{Alpha}+(\\s\\p{Alpha}+)*")
+//    @NotNull
+//    @Pattern(regexp = "\\p{Alpha}+(\\s\\p{Alpha}+)*")
     private String currentLead;
 
     @NotNull
@@ -52,6 +53,7 @@ public class Team {
     private String friendlyFireIncidents;
 
     public Team() {
+        additionalExpertise = new ArrayList<>();
     }
 
     public Long getId() {

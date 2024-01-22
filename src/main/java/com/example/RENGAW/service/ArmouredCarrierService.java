@@ -15,7 +15,6 @@ public class ArmouredCarrierService{
     private final ArmouredCarrierRepository armouredCarrierRepository;
     private final TeamRepository teamRepository;
 
-    @Autowired
     public ArmouredCarrierService(ArmouredCarrierRepository armouredCarrierRepository, TeamRepository teamRepository) {
         this.armouredCarrierRepository = armouredCarrierRepository;
         this.teamRepository = teamRepository;

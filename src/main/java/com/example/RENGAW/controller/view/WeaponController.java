@@ -21,7 +21,6 @@ public class WeaponController {
     private final WeaponService weaponService;
     private final PersonnelService personnelService;
 
-    @Autowired
     public WeaponController(WeaponService weaponService, PersonnelService personnelService) {
         this.weaponService = weaponService;
         this.personnelService = personnelService;
@@ -53,7 +52,7 @@ public class WeaponController {
 
         model.addAttribute("weaponList", weaponList);
 
-        return "allWeapon";
+        return "weapon/allWeapon";
     }
 
     @GetMapping("/newWeaponForm")
@@ -61,14 +60,14 @@ public class WeaponController {
         Weapon weapon = new Weapon();
         model.addAttribute("weapon", weapon);
 
-        return "weaponForm";
+        return "weapon/weaponForm";
     }
 
     @PostMapping("/saveWeapon")
     public String saveWeapon(@Valid @ModelAttribute Weapon weapon,
                              BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "weaponForm";
+            return "weapon/weaponForm";
         }
 
         weaponService.saveWeapon(weapon);
@@ -82,7 +81,7 @@ public class WeaponController {
         Weapon weapon = weaponService.findWeaponBySerialNumber(weaponSerialNumber);
         model.addAttribute("weapon", weapon);
 
-        return "weaponDetails";
+        return "weapon/weaponDetails";
     }
 
     @GetMapping("/updateWeaponForm/{wsn}")
@@ -91,7 +90,7 @@ public class WeaponController {
         Weapon weapon = weaponService.findWeaponBySerialNumber(weaponSerialNumber);
         model.addAttribute("weapon", weapon);
 
-        return "weaponForm";
+        return "weapon/weaponForm";
     }
 
     @GetMapping("/deleteWeapon/{wsn}")
@@ -109,7 +108,7 @@ public class WeaponController {
         model.addAttribute("personnelList", personnelList);
         model.addAttribute("weaponSerialNumber", weaponSerialNumber);
 
-        return "personnelForWeapon";
+        return "weapon/personnelForWeapon";
     }
 
     @GetMapping("/weaponToPersonnel/pid/{pid}/serial/{wsn}")
@@ -128,7 +127,7 @@ public class WeaponController {
         model.addAttribute("personnelName", personnel.getCurrentRank()+' '+personnel.getFirstName()+' '+personnel.getLastName());
         model.addAttribute("weaponSerialNumber", weaponSerialNumber);
 
-        return "assignWeapon";
+        return "weapon/assignWeapon";
     }
 
     @GetMapping("/finalizePersonnel/pid/{pid}/serial/{wsn}")
@@ -147,7 +146,7 @@ public class WeaponController {
         model.addAttribute("weaponList", weaponList);
         model.addAttribute("personnelId", personnelId);
 
-        return "weaponOfPersonnel";
+        return "weapon/weaponOfPersonnel";
     }
 
     @GetMapping("/removePersonnel/{wsn}")

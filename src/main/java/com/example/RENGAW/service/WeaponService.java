@@ -22,7 +22,6 @@ public class WeaponService{
     private final WeaponRepository weaponRepository;
     private final PersonnelRepository personnelRepository;
 
-    @Autowired
     public WeaponService(WeaponRepository weaponRepository, PersonnelRepository personnelRepository) {
         this.weaponRepository = weaponRepository;
         this.personnelRepository = personnelRepository;
