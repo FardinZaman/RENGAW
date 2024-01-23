@@ -2,10 +2,7 @@ package com.example.RENGAW.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class ArmouredCarrier {
@@ -20,6 +17,13 @@ public class ArmouredCarrier {
 //            generator = "armoured_carrier_sequence"
 //    )
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
+    private Long id;
+
+    @NotNull
+    @Positive
     @Column(unique = true)
     private Long carrierSerialNumber;
 
@@ -35,7 +39,7 @@ public class ArmouredCarrier {
     private String terrainType;
     private String productionCompany;
 
-    @NotBlank
+    @NotNull
     @Pattern(regexp = "^\\d{4}$")
     private String productionYear;
 
@@ -43,11 +47,11 @@ public class ArmouredCarrier {
     @Digits(integer = 100, fraction = 0)
     private Long personnelCapacity;
 
-    private double maxSpeedKmH;
+    private Double maxSpeedKmH;
     private String engineModel;
     private String armor;
     private String armament;
-    private double weightInTonne;
+    private Double weightInTonne;
 
     @ManyToOne(
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH},
@@ -57,6 +61,14 @@ public class ArmouredCarrier {
     private Team team;
 
     public ArmouredCarrier() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getCarrierSerialNumber() {
@@ -123,20 +135,28 @@ public class ArmouredCarrier {
         this.personnelCapacity = personnelCapacity;
     }
 
-    public double getMaxSpeedKmH() {
-        return maxSpeedKmH;
-    }
-
-    public void setMaxSpeedKmH(double maxSpeedKmH) {
-        this.maxSpeedKmH = maxSpeedKmH;
-    }
-
     public String getEngineModel() {
         return engineModel;
     }
 
     public void setEngineModel(String engineModel) {
         this.engineModel = engineModel;
+    }
+
+    public Double getMaxSpeedKmH() {
+        return maxSpeedKmH;
+    }
+
+    public void setMaxSpeedKmH(Double maxSpeedKmH) {
+        this.maxSpeedKmH = maxSpeedKmH;
+    }
+
+    public Double getWeightInTonne() {
+        return weightInTonne;
+    }
+
+    public void setWeightInTonne(Double weightInTonne) {
+        this.weightInTonne = weightInTonne;
     }
 
     public String getArmor() {
@@ -155,14 +175,6 @@ public class ArmouredCarrier {
         this.armament = armament;
     }
 
-    public double getWeightInTonne() {
-        return weightInTonne;
-    }
-
-    public void setWeightInTonne(double weightInTonne) {
-        this.weightInTonne = weightInTonne;
-    }
-
     public Team getTeam() {
         return team;
     }
@@ -174,7 +186,8 @@ public class ArmouredCarrier {
     @Override
     public String toString() {
         return "ArmouredCarrier{" +
-                "carrierID=" + carrierSerialNumber +
+                "id=" + id +
+                ", carrierSerialNumber=" + carrierSerialNumber +
                 ", carrierType='" + carrierType + '\'' +
                 ", carrierModel='" + carrierModel + '\'' +
                 ", wheelStructure='" + wheelStructure + '\'' +

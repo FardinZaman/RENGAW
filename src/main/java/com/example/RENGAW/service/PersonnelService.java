@@ -1,7 +1,11 @@
 package com.example.RENGAW.service;
 
+import com.example.RENGAW.entity.Equipment;
 import com.example.RENGAW.entity.Personnel;
+import com.example.RENGAW.entity.Weapon;
+import com.example.RENGAW.repository.EquipmentRepository;
 import com.example.RENGAW.repository.PersonnelRepository;
+import com.example.RENGAW.repository.WeaponRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,13 +23,21 @@ public class PersonnelService{
 
     private final PersonnelRepository personnelRepository;
     private final TeamService teamService;
+    private final WeaponRepository weaponRepository;
+    private final EquipmentRepository equipmentRepository;
 
-    public PersonnelService(PersonnelRepository personnelRepository, TeamService teamService) {
+    public PersonnelService(PersonnelRepository personnelRepository, TeamService teamService, WeaponRepository weaponRepository, EquipmentRepository equipmentRepository) {
         this.personnelRepository = personnelRepository;
         this.teamService = teamService;
+        this.weaponRepository = weaponRepository;
+        this.equipmentRepository = equipmentRepository;
     }
 
     public Personnel savePersonnel(Personnel personnel) {
+        if(personnel.getTeam() != null){
+            teamService.modifyTeamExpertiseStatus(personnel, personnel.getTeam());
+        }
+
         return personnelRepository.save(personnel);
     }
 
@@ -75,7 +87,29 @@ public class PersonnelService{
         return personnelRepository.findAll(pageable);
     }
 
+    public void removeEquipmentFromPersonnel(Long personnelId) {
+        List<Equipment> equipmentList = equipmentRepository.findByPersonnelId(personnelId);
+        for (Equipment equipment : equipmentList){
+            equipment.setPersonnel(null);
+        }
+        equipmentRepository.saveAll(equipmentList);
+    }
+
+    public void removeWeaponFromPersonnel(Long personnelId) {
+        List<Weapon> weaponList = weaponRepository.findByPersonnelId(personnelId);
+        for (Weapon weapon : weaponList){
+            weapon.setPersonnel(null);
+        }
+        weaponRepository.saveAll(weaponList);
+    }
     public void deletePersonnelById(Long personnelId) {
+        removeWeaponFromPersonnel(personnelId);
+        removeEquipmentFromPersonnel(personnelId);
+
+        if (findPersonnelById(personnelId).getTeam() != null){
+            teamService.removeSinglePersonnel(personnelId);
+        }
+
         personnelRepository.deleteById(personnelId);
     }
 

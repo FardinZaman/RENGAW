@@ -106,6 +106,8 @@ public class TeamController {
 
         model.addAttribute("personnelList", personnelList);
         model.addAttribute("teamId", teamId);
+        model.addAttribute("teamLeadId", teamService.findTeamById(teamId).getCurrentLeadId());
+        model.addAttribute("isTeamFull", teamService.isTeamFull(teamId));
 
         return "team/personnelOfTeam";
     }
@@ -129,10 +131,11 @@ public class TeamController {
         return "redirect:/rng/t/teamMembers/" + teamId;
     }
 
-    @GetMapping("/removePersonnel/{personnelId}")
-    public String removePersonnel(@PathVariable Long personnelId){
-//        personnelService.removePersonnel(personnelId);
+    @GetMapping("/removePersonnel/team/{tid}/personnel/{pid}")
+    public String removePersonnel(@PathVariable("tid") Long teamId,
+                                  @PathVariable("pid") Long personnelId){
+        teamService.removeSinglePersonnel(personnelId);
 
-        return "redirect:/rng/p/showPersonnel/" + personnelId;
+        return "redirect:/rng/t/showTeam/" + teamId;
     }
 }

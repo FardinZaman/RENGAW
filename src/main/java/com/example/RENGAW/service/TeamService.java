@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -54,6 +55,20 @@ public class TeamService{
                         .noneMatch(str -> str.equalsIgnoreCase(s));
                 if(notInList)
                     team.getAdditionalExpertise().add(s);
+            }
+        }
+    }
+
+    public void removeTeamExpertise(List<String> expertiseToRemove, Team team){
+        for(String s: expertiseToRemove){
+            if(s.equalsIgnoreCase("explosive")){
+                team.setHasExplosiveExpert(false);
+            } else if (s.equalsIgnoreCase("ballistic")) {
+                team.setHasBallisticExpert(false);
+            } else if (s.equalsIgnoreCase("technology")){
+                team.setHasTechnologyExpert(false);
+            } else {
+                team.getAdditionalExpertise().remove(s);
             }
         }
     }
@@ -149,6 +164,7 @@ public class TeamService{
         for(Personnel personnel : personnelList){
             personnel.setTeam(null);
         }
+        personnelRepository.saveAll(personnelList);
     }
 
     public Page<Team> findAllTeamPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
@@ -167,5 +183,33 @@ public class TeamService{
         removePersonnelFromTeam(teamId);
 
         teamRepository.deleteById(teamId);
+    }
+
+    private List<String> findExceptionalExpertise(Personnel personnelToRemove, List<Personnel> otherPersonnel) {
+        if (otherPersonnel.isEmpty()) {
+            return personnelToRemove.getExpertise();
+        }
+
+        return personnelToRemove.getExpertise().stream()
+                .filter(expertiseToRemove -> otherPersonnel.stream()
+                        .noneMatch(personnel -> personnel.getExpertise().contains(expertiseToRemove)))
+                .collect(Collectors.toList());
+    }
+
+    public void removeSinglePersonnel(Long personnelId) {
+        Personnel personnelToRemove = personnelRepository.findById(personnelId)
+                .orElseThrow(() -> new EntityNotFoundException("No Personnel with Id : " + personnelId));
+        Team team = personnelToRemove.getTeam();
+        personnelToRemove.setTeam(null);
+        personnelRepository.save(personnelToRemove);
+        List<Personnel> otherPersonnel = personnelRepository.findAllByTeamId(team.getId());
+
+        List<String> expertiseToRemove = findExceptionalExpertise(personnelToRemove, otherPersonnel);
+        removeTeamExpertise(expertiseToRemove, team);
+        teamRepository.save(team);
+    }
+
+    public boolean isTeamFull(Long teamId) {
+        return Objects.equals(findTeamById(teamId).getTeamMemberCount(), personnelRepository.countByTeamId(teamId));
     }
 }

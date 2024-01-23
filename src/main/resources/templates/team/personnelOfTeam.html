@@ -36,12 +36,21 @@
                 <a th:href=@{/rng/p/showPersonnel/{pid}(pid=${personnel.id})} class="btn btn-primary btn-block">
                     View Details
                 </a>
+                &nbsp;
+                <a th:if="${teamLeadId != personnel.id}"
+                   th:href=@{/rng/t/removePersonnel/team/{tid}/personnel/{pid}(tid=${teamId},pid=${personnel.id})}
+                   class="btn btn-danger btn-block">
+                    Remove
+                </a>
+                <span th:if="${teamLeadId == personnel.id}">
+                    Lead
+                </span>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <div class="text-center">
+    <div th:if="${!isTeamFull}" class="text-center">
         <a th:href="@{/rng/t/addPersonnel/{tid}(tid=${teamId})}"
            class="btn btn-success btn-back">
             Add Personnel
