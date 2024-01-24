@@ -1,11 +1,9 @@
 package com.example.RENGAW.service;
 
-import com.example.RENGAW.entity.Equipment;
-import com.example.RENGAW.entity.Personnel;
-import com.example.RENGAW.entity.Team;
-import com.example.RENGAW.entity.Weapon;
+import com.example.RENGAW.entity.*;
 import com.example.RENGAW.exception.PersonnelAlreadyAssignedException;
 import com.example.RENGAW.exception.TeamFullException;
+import com.example.RENGAW.repository.ArmouredCarrierRepository;
 import com.example.RENGAW.repository.EquipmentRepository;
 import com.example.RENGAW.repository.PersonnelRepository;
 import com.example.RENGAW.repository.TeamRepository;
@@ -29,11 +27,13 @@ public class TeamService{
     private final TeamRepository teamRepository;
     private final PersonnelRepository personnelRepository;
     private final EquipmentRepository equipmentRepository;
+    private final ArmouredCarrierRepository armouredCarrierRepository;
 
-    public TeamService(TeamRepository teamRepository, PersonnelRepository personnelRepository, EquipmentRepository equipmentRepository) {
+    public TeamService(TeamRepository teamRepository, PersonnelRepository personnelRepository, EquipmentRepository equipmentRepository, ArmouredCarrierRepository armouredCarrierRepository) {
         this.teamRepository = teamRepository;
         this.personnelRepository = personnelRepository;
         this.equipmentRepository = equipmentRepository;
+        this.armouredCarrierRepository = armouredCarrierRepository;
     }
 
     public boolean isReady(Team team){
@@ -167,6 +167,14 @@ public class TeamService{
         personnelRepository.saveAll(personnelList);
     }
 
+    private void removeCarrierFromTeam(Long teamId) {
+        List<ArmouredCarrier> armouredCarrierList = armouredCarrierRepository.findAllByTeamId(teamId);
+        for (ArmouredCarrier armouredCarrier : armouredCarrierList){
+            armouredCarrier.setTeam(null);
+        }
+        armouredCarrierRepository.saveAll(armouredCarrierList);
+    }
+
     public Page<Team> findAllTeamPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
@@ -181,6 +189,7 @@ public class TeamService{
     @Transactional
     public void deleteTeamById(Long teamId) {
         removePersonnelFromTeam(teamId);
+        removeCarrierFromTeam(teamId);
 
         teamRepository.deleteById(teamId);
     }
@@ -211,5 +220,9 @@ public class TeamService{
 
     public boolean isTeamFull(Long teamId) {
         return Objects.equals(findTeamById(teamId).getTeamMemberCount(), personnelRepository.countByTeamId(teamId));
+    }
+
+    public List<Team> findAllTeam() {
+        return teamRepository.findAll();
     }
 }
